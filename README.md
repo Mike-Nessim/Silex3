@@ -1,4 +1,4 @@
-# New Repository
+# Silex3
 
-This is a new repository.
+Repository for Silex3 project.
 
