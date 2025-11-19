@@ -1,0 +1,8075 @@
+User Manual
+UIM342C / UIM342S / UIM342XS
+Motion Controller for Servo Stepper Motor
+with CAN Interface
+
+UIM342C/UIM342S/UIM342XS
+Intellectual Property Protection Statement
+• UIROBOT products meet the specification contained in their particular UIROBOT user manual;
+• UIROBOT is willing to work with the customer who is concerned about intellectual property protection;
+• Any attempt to destroy the code protection function of UIROBOT products may be regarded as a violation of intellectual property
+protection laws and regulations. If this behavior leads to the acquisition of software or other results protected by intellectual property
+rights without UIROBOT's authorization, UIROBOT has the right to file a lawsuit to stop this behavior in accordance with the Act.
+
+Disclaimer
+Information contained in this publication regarding device applications and the like is provided only for your convenience and may be
+superseded by updates. It is your responsibility to ensure that your application meets with your specifications. UIROBOT MAKES NO
+REPRESENTATIONS OR WARRANTIES OF ANY KIND WHETHER EXPRESS OR IMPLIED, WRITTEN OR ORAL, STATUTORY OR OTHERWISE,
+RELATED TO THE INFORMATION, INCLUDING BUT NOT LIMITED TO ITS CONDITION, QUALITY, PERFORMANCE, MERCHANTABILITY OR
+FITNESS FOR PURPOSE. UIROBOT disclaims all liability arising from this information and its use. Use of UIROBOT Products in life support
+and/or safety applications is entirely at the buyer’s risk, and the buyer agrees to defend, indemnify and hold harmless UIROBOT from
+any and all damages, claims, suits, or expenses resulting from such use. No licenses are conveyed, implicitly or otherwise, under any
+UIROBOT intellectual property rights.
+
+Trademark and Design Statement
+• UIROBOT’s name and logo is a registered trademark of UIROBOT in China and other countries or regions.
+• The appearance designs of UIROBOT’s products have applied for patent protection.
+
+Contact information
+United Intelligence Robotics (Zhejiang) Co., Ltd.
+Address: Bldg B3, Innovation Park, Pinghu, Jiaxing City, Zhejiang Province, China 314200
+Tel: +86 0573-85235951
+Email: support@uirobot-zj.com
+Web: www.uirobot.com
+
+UIM342 Servo Stepper Motor Order Code
+
+UIROBOT
+Motion
+
+UIM
+
+Motor Frame
+
+Motor Length
+
+20 – NEMA 8
+
+42
+
+47
+
+C
+
+Protocol
+
+M
+
+B
+
+-XXX
+
+USER CODE
+
+Encoder Type
+
+Internal Brake
+
+C – CAN bus
+
+M – Incremental
+
+B – Embedded Brake
+
+28 – NEMA 11
+
+R RS232
+
+A – Absolute Multi
+
+□ – No Brake
+
+42 – NEMA 17
+
+P – Pulse/Dir
+
+S – Absolute Single
+
+57 – NEMA 23
+86 – NEMA 34
+
+Revision History
+Manual version
+
+Revision date
+
+change
+
+V 1.0
+
+November 1st, 2023
+
+Initial version
+
+Page 2
+
+UIROBOT
+
+Motion Controller with CAN Interface
+UIM342C / UIM342S / UIM342XS
+Motion Controller for Servo Stepper Motor
+With CAN Bus Interface
+The UIM342 series are advanced motion controllers designed for servo stepper motors, featuring a
+CAN Bus interface.
+These controllers integrate several key functional modules: Communication Unit / Motion Control
+Unit / Motor Driver / Feedback Control Unit / Input Logic Control and DSP System (for processing
+instructions, replying, notifications, coordinating other functional modules, executing preloaded
+user programs, and providing real-time status updates)
+The major control loop is executed within 1 millisecond, ensuring responsiveness.
+
+Key Features:
+
+
+
+
+
+High-Performance DSP System: Executes all control loops within 1 millisecond.
+Comprehensive SDK: Includes SDK, DLL, LIB, and SO files.
+Sample Codes: Available in C++, C#, and other languages.
+Cross-Platform Support: Compatible with Linux, Windows 32-bit, and 64-bit systems.
+
+Control System
+
+I/O Logic Control
+
+− Robust DSP hardware
+− Fault tolerance, fail safe user interface
+− Input and event change notification
+
+− 3 digital inputs
+− 1 output port (5V / 50mA)
+− 3 trigger types (Continuous/Low-pass Filter/One-
+
+Motor Driver
+
+time)
+
+− Input change notification
+− Wide Voltage Input: Operates on 24 ~ 48 VDC.(1)
+− 11 preset actions can be attached to the I/O port
+− Adjustable Phase Current: Up to 8 A .(1)
+trigger
+− PWM Constant Current
+CAN Networking
+− Micro-Stepping: 1 ~ 1/64 resolution
+− Active CAN 2.0, 1 Mbps Max.
+− No vibration or noise at low speeds.
+− 1500V photoelectric isolation
+− Protection: Overcurrent, overvoltage, overheating,
+− Support 3 types IDs:
+etc.
+1) Node ID
+Closed-loop Control
+2) Group ID
+− High positioning accuracy, high response,
+3) Global ID
+Maximum speed up to 3000 rpm, it’s depends on
+the Motor type
+
+− Speed control, position control
+− Backlash Compensation
+− Stall detection
+Note:
+(1) Depending on the actual controller.
+
+UIROBOT
+
+Other features
+
+− Emergency trigger lockout
+− Integrated design with motor
+− Aluminum alloy casing, sturdy and durable for
+easy heat dissipation
+
+− Size as small as 20 mm x 20 mm x 16 mm
+
+Page 3
+
+UIM342C/UIM342S/UIM342XS
+Contents
+Safety................................................................................................................................................................... 6
+Maintenance ........................................................................................................................................................ 6
+Hardware ............................................................................................................................................................ 7
+Instruction Set Summary ..................................................................................................................................... 9
+Quick Start ........................................................................................................................................................ 10
+Specifications ..................................................................................................................................................... 14
+1.0
+1.1
+1.2
+1.3
+1.4
+1.5
+1.6
+1.7
+1.8
+
+Introduction...................................................................................................................................... 15
+Communication Unit ........................................................................................................................... 15
+Motion Control................................................................................................................................... 16
+Motor Driver ...................................................................................................................................... 16
+Input Logic Control ............................................................................................................................ 16
+Logic after Motor Stall ........................................................................................................................ 17
+Real Time Notification ........................................................................................................................ 17
+System development ........................................................................................................................... 17
+Connect to User Devices ..................................................................................................................... 17
+
+2.1
+2.2
+2.3
+2.4
+2.5
+2.6
+
+Protocol ............................................................................................................................................ 19
+Instruction and Reply (ACK) ............................................................................................................... 19
+Mnemonic.......................................................................................................................................... 20
+Error Report ....................................................................................................................................... 20
+Real-Time Status and Alarm Notification .............................................................................................. 21
+Direct CAN Communication ................................................................................................................ 22
+RS232 / USB / Ethernet Gateway ......................................................................................................... 24
+
+3.1
+3.2
+3.3
+3.4
+3.5
+3.6
+3.7
+
+Motion Control ................................................................................................................................. 25
+Direction of Rotation .......................................................................................................................... 25
+Motion Control Modes ........................................................................................................................ 25
+Acceleration, Deceleration and Cut-in speed.......................................................................................... 26
+Backlash Compensation ...................................................................................................................... 26
+Closed Loop / Open Loop Control ........................................................................................................ 27
+Stall Detection .................................................................................................................................... 27
+Acquire Motion Status ........................................................................................................................ 28
+
+4.1
+4.2
+4.3
+4.4
+
+Input Logic Control .......................................................................................................................... 30
+Wiring the Sensor ............................................................................................................................... 30
+Trigger modes .................................................................................................................................... 30
+Configure / Attach Input Logic Action .................................................................................................. 31
+Real-time Notification for Input Change ............................................................................................... 33
+
+5.1
+5.2
+5.3
+5.4
+5.5
+5.6
+5.7
+5.8
+5.9
+5.10
+5.11
+5.12
+5.13
+
+Instruction Set .................................................................................................................................. 34
+PP[i] Protocol Parameter................................................................................................................. 35
+IC[i] Initial Configuration............................................................................................................... 36
+IE[i] Information Enable ................................................................................................................ 37
+ML Model ......................................................................................................................................... 38
+SN Serial Number.............................................................................................................................. 39
+ER[i] Error Report .......................................................................................................................... 40
+QE[i] Quadrature Encoder ............................................................................................................... 41
+SY[i] System Operation .................................................................................................................. 42
+MT[i] Motor Driver ......................................................................................................................... 43
+MO Motor Driver On /Off ................................................................................................................... 44
+BG Begin Motion............................................................................................................................... 45
+ST Stops Motion ............................................................................................................................... 46
+MF Motion Parameter Frame ............................................................................................................... 47
+
+2.0
+
+3.0
+
+4.0
+
+5.0
+
+Page 4
+
+UIROBOT
+
+Motion Controller with CAN Interface
+5.14
+5.15
+5.16
+5.17
+5.18
+5.19
+5.20
+5.21
+5.22
+5.23
+5.24
+5.25
+5.26
+5.27
+5.28
+5.29
+
+AC Acceleration ......................................................................................................................... 48
+DC Deceleration ......................................................................................................................... 49
+SS Cut-in Speed ................................................................................................................................ 50
+SD Stop Deceleration ......................................................................................................................... 51
+JV Jog Velocity ................................................................................................................................ 52
+SP PTP Speed ................................................................................................................................... 53
+PR Position Relative .......................................................................................................................... 54
+PA Position Absolute ......................................................................................................................... 55
+OG Set Origin .................................................................................................................................... 56
+BL Backlash Compensation ................................................................................................................ 57
+MS[i] Motion Status ........................................................................................................................ 58
+DV[i] Desired Values ...................................................................................................................... 59
+IL[i] Input Logic ........................................................................................................................... 60
+TG[i] Trigger ................................................................................................................................. 61
+DI Digital I /O .................................................................................................................................. 62
+RT Real-Time Inform ........................................................................................................................ 63
+
+Appendix-1
+
+UIROBOT
+
+RTU CRC16 Source Code ............................................................................................................. 64
+
+Page 5
+
+UIM342C/UIM342S/UIM342XS
+
+Safety
+To prevent personal injury and property damage, please be sure to pay attention to the following
+before use:
+Precautions
+
+Consequences of Neglect
+
+Do not use it in humid , corrosive, flammable gas
+environments or places near flammable substances
+
+Fire / Malfunction
+
+Do not use the wire when it is soaked in oil/water
+
+Fire / Malfunction
+
+For motors with shaft keyway, do not touch the keyway
+with bare hands
+
+Personal injury
+
+Never touch the rotating parts of a running motor
+
+Personal injury
+
+Do not touch the running motor, it may be very hot
+
+Personal injury
+
+Do not cause the wires to be damaged or subjected to
+excessive external force, heavy pressure, or clamping
+
+Fire / Malfunction
+
+Do not hold the cable or motor shaft when transporting
+
+Personal injury / Malfunction
+
+Never hit the motor
+
+Malfunction
+
+Do not frequently power on / off
+
+Malfunction
+
+Never modify, disassemble or repair by yourself
+
+Fire / Malfunction / Personal injury
+
+Power supply voltage must meet the product requirements,
+and the Power supply current must be 1.5 times larger than
+the product requirements
+
+Malfunction
+
+Cut off the power when not in use for a long time
+
+Fire / Malfunction / Personal injury
+
+Maintenance
+Please perform regular maintenance and inspection on the controller for safe use. Please pay
+attention to the following during maintenance and inspection:
+① When performing the insulation test on the drive, be sure to disconnect all connections.
+② Do not use gasoline, thinner, alcohol, acidic and alkaline cleaning agents to avoid damage to
+the casing.
+Daily inspections and periodic inspections should be carried out according to the following items.
+Type
+
+Period
+
+Check Item
+
+Daily
+Inspection
+
+Every day
+
+•
+•
+•
+•
+•
+
+Periodic
+Inspection
+
+1 year
+
+•
+•
+
+Page 6
+
+Confirm the operating temperature and humidity
+No foreign matter entering
+Abnormal vibration, sound and odor
+Abnormal power supply voltage
+Damaged wiring parts
+No looseness in the fastening parts
+Broken terminal blocks and loose fastening parts
+
+UIROBOT
+
+Motion Controller with CAN Interface
+
+Hardware
+Figure 0-1: UIM342XS Wiring Diagram
+
+Figure 0-2: UIM342S Wiring Diagram
+
+UIROBOT
+
+Page 7
+
+UIM342C/UIM342S/UIM342XS
+Figure 0-3: UIM342C Wiring Diagram (Socket Style)
+
+Figure 0-4: UIM342C Wiring Diagram (Cable Style)
+
+Page 8
+
+UIROBOT
+
+Motion Controller with CAN Interface
+
+Instruction Set Summary
+Classification
+Protocol
+
+System
+
+Motor Driver
+
+Motion Control
+
+I/O
+Notification
+
+UIROBOT
+
+Control
+Word
+
+Function
+
+PP[i]
+
+0x01
+
+Set / Get
+
+Protocol Parameters
+
+5.1
+
+IC[i]
+
+0x06
+
+Set / Get
+
+Initial Configuration
+
+5.2
+
+IE[i]
+
+0x07
+
+Set / Get
+
+Information Enable
+
+5.3
+
+ML
+
+0x0B
+
+Get
+
+Model
+
+5.4
+
+SN
+
+0x0C
+
+Get
+
+Serial Number
+
+ER[i]
+
+0x0F
+
+Clear / Get Error Report
+
+5.5
+5.6
+
+QE[i]
+
+0x3D
+
+Set / Get
+
+Quadrature Encoder
+
+5.7
+
+SY[i]
+
+0x7E
+
+Set
+
+System Operation
+
+5.8
+
+MT[i]
+
+0x10
+
+Set / Get
+
+Motor Driver parameters
+
+5.9
+
+MO
+
+0x15
+
+Set / Get
+
+Motor On /Off
+
+5.10
+
+BG
+
+0x16
+
+Set
+
+Begin Motion
+
+5.11
+
+ST
+
+0x17
+
+Set
+
+Stop Motion
+
+5.12
+
+MF
+
+0x18
+
+Get
+
+Motion Parameter Frame
+
+5.13
+
+AC
+
+0x19
+
+Set / Get
+
+Acceleration
+
+5.14
+
+DC
+
+0x1A
+
+Set / Get
+
+Deceleration
+
+5.15
+
+SS
+
+0x1B
+
+Set / Get
+
+Cut-in speed
+
+5.16
+
+SD
+
+0x1C
+
+Set / Get
+
+Stop Deceleration
+
+5.17
+
+JV
+
+0x1D
+
+Set / Get
+
+Jog Velocity
+
+5.18
+
+SP
+
+0x1E
+
+Set / Get
+
+PTP Speed
+
+5.19
+
+PR
+
+0x1F
+
+Set / Get
+
+Position Relative
+
+5.20
+
+PA
+
+0x20
+
+Set / Get
+
+Position Absolute
+
+5.21
+
+OG
+
+0x21
+
+Set
+
+Set Origin
+
+5.22
+
+BL
+
+0x2D
+
+Set / Get
+
+Backlash Compensation
+
+5.23
+
+MS[i]
+
+0x11
+
+Clear / Get Motion Status
+
+5.24
+
+DV[i]
+
+0x2E
+
+Get
+
+Desired Values
+
+5.25
+
+IL[i]
+
+0x34
+
+Set / Get
+
+Input Logic
+
+5.26
+
+TG[i]
+
+0x35
+
+Set / Get
+
+Trigger
+
+5.27
+
+DI
+
+0x37
+
+Set / Get
+
+Digital I /O
+
+5.28
+
+RT
+
+0x5A
+
+Auto Sent
+
+Real-Time Inform
+
+5.29
+
+Mnemonic
+
+Object
+
+Chapter
+
+Page 9
+
+UIM342C/UIM342S/UIM342XS
+
+Quick Start
+The following explains how to quickly build and run a motor system consisting of 2 servo stepper
+motors equipped with UIM342 controllers and 1 UIM2513 gateway.
+For the convenience of users, the development kit (UIMEVA_342KIT) provided by UIROBOT
+Company includes the experimental materials used in the system (excluding Windows PC).
+1)
+
+Connect the wiring as shown below. Be sure to check the wiring again before powering on to
+make sure it is correct.
+
+Figure 0-5: Quick connection diagram
+UIM2040M
+Servo Stepper
+
+UIM4247M
+Servo Stepper
+
+Note:
+1) UIM342 Initial ID: 5
+2) UIM342 Initial Bitrate: 500K
+
+Power Supply
+DC24V / 3Amp Min.
+
+GND
+24V
+
+Windows
+PC
+
+UIM342 I/O Board
+CANL
+CANH
+USB-232 Cable UIM2513 Gateway
+
+
+
+WARNING
+Avoid using star connections. When the CAN cable length exceeds 20 meters, dedicated CAN
+cables should be used. The length of branch cable to each node should not exceed 20 cm.
+
+
+
+UIM2513 has a built-in terminal resistor, which can be activated by the toggle switch. It is
+recommended to connect a 120-ohm terminal resistor to the other end of the CAN cable.
+
+
+
+Strictly avoid hot-plugging while the power is on. Hot-plugging may lead to ground loss (i.e.
+the power supply V+ is connected while V- is disconnected). In such instances, power V+ will
+flow into other UIM devices via the CAN cable, causing the burnout of multiple UIM devices.
+
+
+
+Connect all UIM devices to a common ground. Activating a high-power device can raise the
+voltage on one ground significantly. Without a common ground, this elevated voltage may flow
+via the CAN cable to the ground of other UIM devices, risking the burnout of multiple devices.
+
+2)
+
+Download and click to run the Windows based control panel “StepEva3”.
+
+Figure 0-6: Icon of StepEva3
+
+Page 10
+
+UIROBOT
+
+Motion Controller with CAN Interface
+3)
+
+UIM2513 (RS232 -CAN) should be selected here.
+
+Figure 0-7: Gateway selection screen 2
+1.Select Gateway
+
+4)
+
+2.Select Protocol Parameters
+
+Select the UIM342C02-IE to operate in the device list on the left.
+
+Figure 0-8: Gateway information screen
+1. Select the Motor to Operate
+
+5)
+
+Set motion parameters and operate the motor to move.
+
+UIROBOT
+
+Page 11
+
+UIM342C/UIM342S/UIM342XS
+Figure 0-9: Motion control interface
+System Network Tree
+
+Motor Info.
+
+Motion Control Panel
+
+Communication
+Log
+
+JOG mode, follow steps 1 ...6 below to control the motor rotation.
+Figure 0-10: Motion control interface, JOG mode
+3. Type in desired Speed
+
+1. Select JOG Mode
+
+4. Send Speed to UIM342
+
+2. Turn On
+Motor Driver
+5. Click to Start
+Motion
+6. Stop Motion
+if wish
+
+Page 12
+
+UIROBOT
+
+Motion Controller with CAN Interface
+PTP mode, follow steps 1 to 5 below to control the motor rotation.
+Figure 0-11: Motion control interface, PTP mode
+3. Type in desired Speed
+
+4. Type in desired Position
+
+1. Select PTP Mode
+
+4. Send Settings to UIM342
+
+2. Turn On
+Motor Driver
+6. Click to Start
+Motion
+7. Stop Motion
+if wish
+
+UIROBOT
+
+Page 13
+
+UIM342C/UIM342S/UIM342XS
+
+Specifications
+Absolute Maximum Ratings
+Ambient temperature under bias....................................................................................................-40 °C to 85 °C
+Storage temperature ................................................................................................................ -65 °C to +150 °C
+Voltage on V+ with respect to V- (UIM342XS / 342S).......................................................................10 V to 36 V
+Voltage on V+ with respect to V- (UIM342C)………….......................................................................10 V to 36 V
+Voltage on V+ with respect to V- (UIM342H).....................................................................................20 V to 36 V
+Voltage on input ports with respect to V- ........................................................................................ -0.3 V to 5.3 V
+Maximum current sourced by output port….............................................................................................100 mA
+CANH /CANL voltage with respect to V-.......................................................................................- 40 V to + 40 V
+Stresses above those listed under “Absolute Maximum Ratings” may cause permanent damage to the device.
+This is a stress rating only and functional operation of the device at those or any other conditions above those
+indicated in the operational listings of this specification is not implied. Exposure to maximum rating conditions
+for extended periods may affect device reliability.
+
+Operating Conditions (at ambient temperature 25 °C)
+Specification
+Supply Voltage (DC)
+
+UIM342XS/342S
+
+UIM342C
+
+UIM342H
+
+10V– 28V
+
+20V-40V
+
+20V-50V
+
+Driver Capacity
+Current Control
+
+Peak 1 / 2 / 4 / 8 Amp
+PWM constant current
+
+Micro-Stepping
+
+full, 1/2/4/8/16/32/64
+
+Operating Environment
+Cooling
+Environment
+
+Free Air
+Avoid dust, oil mist and corrosive gases
+
+Operating temperature
+Humidity
+Vibration
+Storage
+
+-40 ℃ ~85 ℃
+< 80% RH, no condensation, no frost
+3 G Max
+-65 ℃ ~ 150 ℃
+
+Communication Interface
+CAN
+
+Active CAN 2.0
+
+CAN Physical
+
+Two-wire system, CANH, CANL, twisted pair
+
+CAN Driver
+
+
+
+
+
+Page 14
+
+Max. 1 Mbps
+Meets ISO-11898 standard physical layer requirements.
+Differential bus
+
+UIROBOT
+
+Motion Controller with CAN Interface
+
+1.0
+
+Introduction
+
+UIM342 motion controller can realize open-loop control or closed-loop control. Its main functional
+modules include: Communication Unit, Motion Control Unit, Motor Driver, Feedback Control Unit, Input
+Logic Control and DSP System (processing instruction / reply / notification, and coordinating other
+functional modules, executing preloaded user programs and real-time status notifications, etc.). All control
+loops are completed within 1 millisecond.
+Figure 1-1: System functional structure
+
+UIM Servo Stepper Motor
+UIM342
+
+CAN bus
+
+Feedback
+Control
+
+Comm.
+Unit
+
+DSP
+System
+Sensor
+
+Input Logic
+
+Motion
+Control
+
+User
+Program
+Block
+
+Motor
+Driver
+
+Motor
+
+1.1 Communication Unit
+Active CAN 2.0 B hardware and software is used, and CAN bit rate is configurable from 125 K to 1000
+Kbps by instructions.
+To improve the coordination performance of multi-modules, UIM342 supports 3 types of CAN ID: Global
+ID (=0), Group ID and Node ID. The Group ID and Node ID are configurable via instructions. UIM342
+will accept the message that has a CAN ID matches any one of the three IDs.
+Figure 1-2: Global ID / Group ID / Node ID
+
+Global ID (=0)
+Group ID1
+
+Group ID2
+
+Node ID1
+
+Node ID2
+
+Node ID3
+
+Node ID4
+
+Node ID5
+
+UIM342
+
+UIM342
+
+UIM342
+
+UIM342
+
+UIM342
+
+WARNING: make sure that: Group ID1 ≠ Group ID2 ≠ Node ID1 ≠Node ID2 ≠ Node ID3 ≠ Node ID4 ≠ Node
+
+UIROBOT
+
+Page 15
+
+UIM342C/UIM342S/UIM342XS
+1.2 Motion Control
+Contains hardware and software for speed control and position control in open-loop or closed-loop modes.
+In addition of normal functions like speed, relative position, absolute position, UIM342 also provides
+functions such as backlash compensation and automatic reciprocating oscillation to facilitate medical
+device’s needs.
+
+1.3 Motor Driver
+Supports 1/2/4/8/16/32/64 micro-stepping, with almost no vibration/noise when running at low speed.
+In the low-speed range, compared with AC and DC servo systems, the UIM342 Servo Stepper Motor has
+higher torque, smaller size, and excellent cost effectiveness.
+
+1.4 Input Logic Control
+UIM342 supports 3 digital inputs. User can configure the actions to be performed on the logic level change.
+There are total 6 motion parameter sets. Each input port has 2 sets of motion parameters, one for rising
+edge, and another for falling edge. Each motion parameter set includes: acceleration AC and deceleration
+DC, +/- speed SP, +/- displacement PR, +/- position PA.
+There are 11 functional behaviors that can be attached to the rising/falling edge of the inputs:
+H-Bridge
+
+Motor
+
+Drive OFF, freewheel
+
+1)
+
+V
+
+STOP
+SD
+
+2)
+
+T
+
+V
+DC
+T
+
+3)
+
+SD
+
+5)
+V
+DC
+
+Page 16
+
+Decelerating to stop (using DC)
+
+Set origin then go reversed relative position (using |PR|, SP, AC, DC)
+
+POS0
+
+V
+
+6)
+
+Emergency stop (using SD)
+
+Slow Down
+Stop
+
+POS0
+Reverse
+Go |PR|
+
+|PR|
+
+4)
+
+E-Stop
+
+T
+
+STOP
+
+POS0
+Slow Down
+Stop
+T
+
+Set origin then Emergency stop (using SD)
+
+Set origin then decelerate to stop (using DC)
+
+UIROBOT
+
+Motion Controller with CAN Interface
+
+7)
+
+Reverse
+Run |SP|
+
+|SP|
+
+Reversed Jog (using |SP|, AC, DC)
+Run SP
+
+8)
+
+9)
+
+SP<0 SP>0
+
+Jog (using SP, AC, DC)
+Reverse
+Go |PR|
+
+|PR|
+
+Go reverse relative position (using |PR|, SP, AC, DC)
+Go PR
+
+10)
+
+PR<0
+
+PR>0
+Pc
+
+11)
+
+PA<Pc
+
+PA>Pc
+
+Go relative position (using PR, SP, AC, DC)
+Go PA
+
+Go absolute position (using PA, SP, AC, DC)
+
+1.5 Logic after Motor Stall
+After “motor stall” is detected, by default, the motor shaft will be stopped and locked.
+However, set “IL[16] =1” will change the logic to “turn motor driver off (freewheel)” after a “stall”
+situation is detected.
+
+1.6 Real Time Notification
+UIM342 can automatically send messages to the user after detecting the occurrence of a preset event. The
+time from detection to event occurrence to feedback is less than 1 millisecond.
+UIM342 supports real-time notification for following events:
+
+
+
+
+
+Reach desired position (in PTP mode),
+Rising edge and falling edge of input 1, 2, and 3,
+Detection of motor stall, and
+Other alarm/warnings.
+
+1.7 System development SDK
+The instruction set for UIM342 motion controller is simple and highly fault-tolerant. If an incorrect
+command is entered, the motion controller will return an error message to the host computer. Wrong
+instructions are not executed to avoid accidents.
+UIROBOT Company provides free System Development Kit (SDK), and provides free C++ and C#
+software control demonstration source code and demonstration software based on Visual studio.
+Meanwhile, UIROBOT provides R&D services for user control system solution development.
+
+1.8 Connect to User Devices
+There are 4 ways to connect the UIM342 to the user devices, as shown in Figure 1-3:
+UIROBOT
+
+Page 17
+
+UIM342C/UIM342S/UIM342XS
+1） Directly through CAN Bus if the user controller has a CAN port;
+2） Using the UIM2513 RS232-CAN gateway (sold separately);
+3） Using the UIM2533 USB-CAN gateway (sold separately);
+4） Using the UIM2523 Ethernet-CAN gateway (sold separately).
+Figure 1-3: Connect to User Devices
+
+CAN bus
+
+USER
+MCU
+
+UIM Servo Stepper Motor
+USER
+
+RS232
+
+PC
+
+UIM2513
+
+CAN bus
+UIM Servo Stepper Motor
+
+USER
+
+USB
+
+PC
+
+UIM2533
+
+CAN bus
+UIM Servo Stepper Motor
+
+USER
+PC
+
+Ethernet
+
+UIM2523
+
+CAN bus
+UIM Servo Stepper Motor
+
+Page 18
+
+UIROBOT
+
+Motion Controller with CAN Interface
+
+2.0
+
+Protocol
+
+This section introduces the instructions, reply / ACK, error reporting, and real-time status and alarm
+notifications supported by UIM342.
+
+2.1
+
+Instruction and Reply (ACK)
+
+Instruction is the commanding message sent from the user computer to the UIM342. Before
+receiving an instruction, UIM342 will not act.
+ACK is a feedback sent from UIM342, after receiving an instruction. For setup instruction, the ACK
+message is typically a repeat of the instruction; for query instruction, the ACK message provides the
+queried data.
+Figure 2-1: Instruction and ACK
+UIM
+Control Data
+Node ID Word Length
+
+ID
+
+Instruction/ACK
+
+CW
+
+DL
+
+Data
+
+d0
+
+…
+
+d7
+
+bit7 bit6 bit5 bit4 bit3 bit2 bit1 bit0
+
+Function Code
+
+FG
+
+CW. bit7 =0: Disable ACK；1: Request ACK
+
+ID
+
+Device ID (1 byte), could be one of 3 types as listed below:
+1） UIM342 Node ID (configurable via instruction),
+2） Group ID of UIM devices (configurable via instruction), or
+3） Global ID = 0, fixed.
+
+CW
+
+Control Word (1 byte):
+1） CW.bit <6:0> is the function code (0x00…0x7F);
+2） For instructions,
+CW.bit7 = 1, ACK is expected;
+CW.bit7 = 0, No ACK needed.
+3） For ACK, CW.bit7 is fixed to 0.
+
+DL
+
+Valid number of bytes of data (1 byte).
+
+d0…d7 Data bytes, least significant byte first.
+
+UIROBOT
+
+Page 19
+
+UIM342C/UIM342S/UIM342XS
+2.2
+
+Mnemonic
+
+For user convenience, UIM products provide a set of mnemonics used to represent various
+instruction codes. For example:
+Mnemonic
+
+CW
+
+Function
+
+MO
+
+0x15
+
+Turn on/off motor drive
+
+The relation between mnemonic expressions and instructions is shown below:
+Figure 2-2: Mnemonic Expression & Instruction Message
+Mnemonic
+Data
+Mnemonic
+MO
+
+=
+
+1
+
+id
+
+15
+
+01
+
+01 …
+
+ID
+
+CW
+
+DL
+
+d0 …
+
+Sub-index
+
+Data
+
+PP
+
+[5]
+
+=
+
+6
+
+id
+
+01
+
+02
+
+05
+
+06
+
+…
+
+ID
+
+CW
+
+DL
+
+d0
+
+d1
+
+…
+
+&
+Instruction：
+
+2.3
+
+Error Report
+
+When UIM342 receives a wrong instruction, it will not execute the instruction, instead, it will reply
+an error message. Meanwhile, users can use ER[i] to get the latest error and the previous 7
+historical errors. The format of an error message is listed below:
+Figure 2-3: Error Report Format
+
+ID
+ID
+
+Error Report：
+
+CW
+0F
+
+DL
+06
+
+00
+
+d1
+
+DATA
+d2
+d3
+
+d5
+
+…
+
+Factory use
+
+ER
+Newest Error
+Error Code
+Related CW
+d1
+
+d4
+
+Sub-Index of CW
+
+Error Code;
+Error Code for UIM342
+
+Description
+
+0x32
+
+Instruction Syntax error
+
+0x33
+
+Instruction Data error
+
+0x34
+
+Instruction Sub-Index error
+
+0x3C
+
+SD value is less than DC value
+
+0x3D
+
+Current instruction is not allowed when motor is running
+
+0x3E
+
+BG is not allowed when motor driver is OFF
+
+0x3F
+
+BG is not allowed during emergency stopping
+
+0x41
+
+OG is not allowed when motor is running
+
+d2
+
+CW related to the error, e.g., d2 = DI indicates an error on previous DI instruction.
+
+d3
+
+Sub-Index of the CW related to the error, e.g., d2= PP; d3 = 5 indicates an error on
+previous PP[5] instruction.
+
+d4, d5
+
+Factory use, don’t care.
+
+Page 20
+
+UIROBOT
+
+Motion Controller with CAN Interface
+2.4
+
+Real-Time Status and Alarm Notification
+
+Real-time notifications are messages the UIM controller automatically sends to the user device,
+including execution status, alarms, and I/O port level change notifications.
+UIM342 is equipped with a notification/information enable configuration register. Some real-time
+notifications can be enabled / disabled by setting this register. The notification enable register is read
+and written by the instruction IE[i]. Refer to “5.3 IE[i] Information Enable” for details.
+The real-time status notification format sent by UIM342 to the user is as follows:
+Figure 2-4: Real-time Notification
+
+Real Time Notification
+
+ID
+
+5A
+
+DL
+
+d0
+
+d1
+
+…
+
+d7
+
+Types of notifications are shown in the table below: (The message examples are all assumed to be
+produced by site 5(ID=5))
+d0
+
+d1
+
+Type
+
+Notification message example
+
+-
+
+-
+
+-
+
+ID CW DL d0 d1 d2 d3 d4 d5 d6 d7
+
+-
+
+0
+
+0x0A
+
+Alarm
+
+05 5A 05 00 0A 00 00 00 00 00 00
+
+System emergency stop and lock
+
+0
+
+0x19
+
+Alarm
+
+05 5A 05 00 19 00 00 00 00 00 00
+
+Speed over limit
+
+0
+
+0x1A
+
+Alarm
+
+05 5A 05 00 1A 00 00 00 00 00 00
+
+Exceed Lower Working Limit
+
+0
+
+0x1B
+
+Alarm
+
+05 5A 05 00 1B 00 00 00 00 00 00
+
+Exceed Upper Working Limit
+
+0
+
+0x1D
+
+Alarm
+
+05 5A 05 00 1D 00 00 00 00 00 00
+
+Motor Stall Detected
+
+0
+
+0x1E
+
+Alarm
+
+05 5A 05 00 1E 00 00 00 00 00 00
+
+Encoder Error
+
+0
+
+0x1F
+
+Alarm
+
+05 5A 05 00 1F 00 00 00 00 00 00
+
+Encoder Battery Low
+
+0x01
+
+0
+
+Status
+
+05 5A 01 01 00 00 00 00 00 00 00
+
+Input 1 falling edge detection
+
+0x02
+
+0
+
+Status
+
+05 5A 01 02 00 00 00 00 00 00 00
+
+Input 1 rising edge detection
+
+0x03
+
+0
+
+Status
+
+05 5A 01 03 00 00 00 00 00 00 00
+
+Input 2 falling edge detection
+
+0x04
+
+0
+
+Status
+
+05 5A 01 04 00 00 00 00 00 00 00
+
+Input 2 rising edge detection
+
+0x05
+
+0
+
+Status
+
+05 5A 01 05 00 00 00 00 00 00 00
+
+Input 3 falling edge detection
+
+0x06
+
+0
+
+Status
+
+05 5A 01 06 00 00 00 00 00 00 00
+
+Input 3 rising edge detection
+
+0x29
+
+0
+
+Status
+
+05 5A 08 29 00 00 00 p0 p1 p2 p3
+
+PTP positioning completed,
+[p3:p0] = current position
+
+UIROBOT
+
+Remark
+
+Page 21
+
+UIM342C/UIM342S/UIM342XS
+2.5
+
+Direct CAN Communication
+
+When directly communicating with UIM342 devices via CAN Bus, the user CAN controller needs to
+be configured as follows:
+1） TQ number, use one of the following options:
+ 1 M bps use 8 TQ;
+ 800 K bps use 10 TQ;
+ Any other bps, use 16 TQ.
+2） Synchronous jump: 1 TQ.
+3） Sample once at each sampling time.
+4） Phase Segment 2: 2 TQ.
+5） Filter and MASK are configured to receive all messages.
+6） Set SRR = 1; IDE = 1; RTR = 0; RB1 = 0; RB0 = 0;
+Extended CAN Message
+S
+O
+F
+
+Std. ID
+(SID)
+11 Bit
+
+S
+R
+R
+
+I
+D
+E
+
+Ext. ID (EID)
+18 Bit
+
+R
+T
+R
+
+R
+B
+1
+
+R
+B
+0
+
+DLC
+4 Bit
+
+Data Field
+0.. 8 Byte
+
+D
+E
+L
+
+CRC
+15 Bit
+
+A
+C
+K
+
+EID, SID, DLC, and data0…data7 of the CAN message should be processed as follows:
+Sending instructions to UIM342:
+SID = ((ID<<1) & 0x003F) | 0x0100; //ID (Consumer, UIM’s Address)
+EID = (((ID<<1) & 0x00C0)<<8) | CW; //CW (Control Word)
+DLC = DL;
+//DL (Effective Data Length)
+CANTX_B0 = d0;
+CANTX_B1 = d1;
+CANTX_B2 = d2;
+CANTX_B3 = d3;
+CANTX_B4 = d4;
+CANTX_B5 = d5;
+CANTX_B6 = d6;
+CANTX_B7 = d7;
+Note: Some controllers may use 32bits CAN-ID, which = (SID<<18) | EID;
+
+Parsing received messages from UIM342:
+ID = ((EID>>11)&0x0060)|((SID>>6)&0x001F); //ID (Producer, UIM’s Address)
+CW = EID&0x00FF;
+//CW (Control Word)
+DL = DLC&0x000F;
+//DL (Effective Data Length)
+d0 = CANRX_B0;
+d1 = CANRX_B1;
+d2 = CANRX_B2;
+d3 = CANRX_B3;
+d4 = CANRX_B4;
+d5 = CANRX_B5;
+d6 = CANRX_B6;
+d7 = CANRX_B7;
+Note: Some controllers may use 32bits CAN-ID, which = (SID<<18) | EID;
+
+Page 22
+
+UIROBOT
+
+Motion Controller with CAN Interface
+To help further understanding the CAN protocol (i.e., SimpleCAN3.0) used to control the UIM342,
+more details and examples are listed below.
+CAN-ID for SimpleCAN3.0
+CAN-ID (29bit)
+EID [17:0] (18bit)
+
+SID[10：0] (11bit）
+10
+
+9
+
+8
+
+7
+
+6
+
+5
+
+4
+
+3
+
+2
+
+1 0
+
+17
+
+16 15
+
+14 13 12 11 10
+
+Producer Consumer
+Producer ID [4:0] Consumer ID [4:0] 0
+ID
+ID
+[6:5]
+[6:5]
+
+9
+
+Reserved = 0
+
+8
+
+7
+
+6
+
+5
+
+4
+
+3
+
+2
+
+1
+
+0
+
+Control Word (CW)
+
+Producer ID
+
+ID of the controller (Master); For user master controller, should use ID = 4.
+
+Consumer ID
+
+ID of UIM342 (Initial ID = 5, range 5…127), can be modified via Instructions.
+
+Control Word Control Word for UIM342; For instance, CW = 0x95 is to enable the motor driver.
+Calculation of SID:
+SID = ((Consumer ID << 1) & 0x003F) | 0x0100;
+Calculation of EID:
+EID = (((Consumer ID << 1) & 0x00C0) << 8) | CW;
+In case of your controller only supports the CAN-ID (32-bit) format, calculate as follows:
+CAN-ID = SID << 18 | EID;
+
+Example
+Using a CAN master device with ID 4 to enable (i.e., MO=1;) a UIM342 motor driver with ID 5
+Producer ID = 4
+Consumer ID = 5
+CW = 0x95 (MO)
+Data = 1;
+Calculate SID:
+Calculate EID:
+Calculate CAN-ID:
+
+SID = ((5 << 1) & 0x003F) | 0x0100 = 0x010A;
+EID = (((5 << 1) & 0x00C0) << 8) | CW = 0x0095;
+CAN-ID = 0x010A << 18 | 0x0095 = 0x04280095;
+DLC = 0x01;
+Data0 = 0x01;
+Send following message from user controller to UIM342:
+CAN-ID (hex) Date Field(hex)
+04280095
+
+01
+
+If the user computer needs to specify DLC, please send following:
+CAN-ID (hex) DLC (hex) Date Field (hex)
+04280095
+
+UIROBOT
+
+01
+
+01
+
+Page 23
+
+UIM342C/UIM342S/UIM342XS
+More examples of CAN message used to control the UIM342 motors are listed below.
+Can-ID (hex)
+
+2.6
+
+Data (hex)
+
+Function
+
+04280095
+
+00
+
+MO = 0, set drive off
+
+04280095
+
+01
+
+MO = 1, set drive on
+
+0428009D
+
+10 27
+
+JV = 10000pps, set jog speed 10000pps
+
+0428009D
+
+F0 d8 FF FF
+
+JV =-10000pps, set jog speed -10000pps
+
+04280096
+
+No data
+
+BG, set begin motion
+
+04280097
+
+No data
+
+ST, set stop motion
+
+0428009F
+
+80 0C
+
+PR = 3200
+
+0428009F
+
+80 F3 FF FF
+
+PR =-3200
+
+042800A0
+
+80 0C
+
+PA = 3200
+
+042800A0
+
+80 F3 FF FF
+
+PA =-3200
+
+0428009E
+
+80 0C
+
+SP = 3200
+
+RS232 / USB / Ethernet Gateway
+
+Gateway such as UIM2513, UIM2523, UIM2533 Messages send / receive are all UIMessage format.
+Figure 2-6: UIMessage format (requires CRC)
+SM
+
+UI Message:
+
+Instruction/ACK
+
+AA ID CW DL d0
+
+Aux. Byte
+
+…
+
+CRC
+
+d7 d8 R0
+
+EM
+
+R1 CC
+
+SM
+
+Start of Message. If need CRC, using 0xAA, else using 0xAD instead,
+
+d8
+
+Auxiliary byte, don’t care,
+
+R1:R0
+
+RTU CRC16, range covers AA…d8, refer to Appendix- 1 for calculation source code,
+
+EM
+
+End of Message; is fixed to 0xCC.
+
+Figure 2-7: UI Message format (no CRC)
+SM
+
+UI Message:
+
+Instruction/ACK
+
+AD ID CW DL d0
+
+Aux Byte
+
+…
+
+d7 d8
+
+CRC
+
+EM
+
+00 00 CC
+
+Notice: UIMessage is in Hex Format, and the length of the message is fixed to 16;
+
+Page 24
+
+UIROBOT
+
+Motion Controller with CAN Interface
+
+3.0
+
+Motion Control
+
+UIM342 motion controller supports speed control mode and point to point (PTP) position control
+mode. User can Set, Get and Store motion parameters through instructions. Meanwhile, user can also
+receive the working status of the motor through real-time notification.
+This chapter briefs the motion control related functions of UIM342.
+
+3.1
+
+Direction of Rotation
+
+Facing the output shaft, direction of the motor rotation is defined as CW if the shaft rotates clockwise,
+and CCW if the shaft rotates count clockwise.
+Figure 3-1: Direction of rotation
+
+CCW
+
+CW
+
+Set “IC[1]=1” to configure the position counter increase when the motor is running in CCW
+direction (Factory default). Otherwise, set “IC[1]=0” to configure the position counter increase
+when the motor is running in CW direction.
+
+3.2
+
+Motion Control Modes
+
+
+
+Speed control (JOG)
+
+UIM342 controls the motor speed to reach the desired speed set by the user through an acceleration
+or deceleration process.
+The JV instruction sets the desired speed value, and the sign (+/-) of the value determines the direction
+of the rotation. In addition, the AC instruction sets the acceleration rate and the DC instruction sets
+deceleration rate.
+After a JV instruction, the BG instruction must be set to start the movement. In this manner,
+multiple UIM342 controllers can be set JV one by one, and start moving at exactly the same time via
+sending BG to the group ID or the global ID.
+
+
+Position control (PTP)
+
+UIM342 controls the speed and displacement of the motor and stops when it reaches the desired
+position. UIM342 approaches the desired speed to the maximum extent while ensuring that the
+position is accurately reached.
+The SP instruction sets the speed used in the position control. The PA instruction sets the absolute
+position, and the PR instruction sets the relative position with regards to the current position.
+After PA/PR instruction, the BG instruction must be set to start the movement. In this manner,
+multiple UIM342 controllers can be set PA/PR one by one, and start moving at exactly the same time
+via sending BG to the group ID or the global ID.
+UIROBOT
+
+Page 25
+
+UIM342C/UIM342S/UIM342XS
+Please note, the actual speed/direction of the motor is determined by the position deviation (i.e.,
+desired position - actual position). If the position deviation is too small, the motor may reach the
+desired position before reaching the desired speed.
+
+3.3
+
+Acceleration, Deceleration and Cut-in speed
+
+In order to improve the response of the motor and avoid the resonance, the acceleration (deceleration)
+process includes a cut-in speed.
+Figure 3-2: Uniform acceleration (deceleration) speed and cut-in speed
+Rotating speed
+
+Acceleration
+
+Desired speed 1
+
+Deceleration
+
+Cut-in speed
+Current speed
+
+Desired speed 2
+T（Time）
+
+Rotating speed
+Cut-in speed
+Desired speed 1
+
+Current speed
+
+Desired speed 2
+
+T（Time）
+
+Rotating speed
+Acceleration
+
+Desired speed 1
+
+Deceleration
+
+Cut-in speed
+Current speed
+Desired speed 2
+
+T（Time）
+
+Instructions AC, DC, SS are used to set acceleration, deceleration and cut-in speed. Acceleration and
+deceleration can be defined by the time of the process, or the rate of acceleration and deceleration.
+The two definitions are shown in the figure below.
+Figure 3-3: AC / DC parameter
+（1）Acceleration Time (ms)
+
+V
+
+Desired Speed
+
+Cut-in Speed
+Current Speed
+
+3.4
+
+（2）Acceleration Rate = ∆V / ∆t (pulse/sec2)
+t（Time）
+
+Backlash Compensation
+
+Mechanical systems (such as screw nut transmission or rack and pinion transmission) have backlash
+problems. For example, there is a certain gap between the screw and the nut. When the forward
+rotation changes to reverse rotation, within a certain angle, although the screw rotates, the nut still
+have to wait for the gap to disappear (the side of the force-bearing side has to wait for the gap to
+Page 26
+
+UIROBOT
+
+Motion Controller with CAN Interface
+disappear).can drive the workbench to move later. Due to the existence of backlash, when the reverse
+motion starts, the accumulated error continues to increase and then becomes stable after the backlash
+is fully compensated.
+UIM342 provides a backlash compensation function to reduce the impact of backlash on mechanical
+transmission accuracy. Use BL instruction to set the backlash compensation value.
+The unit of backlash compensation setting value is pulse, range (0…65536).
+
+3.5
+
+Closed Loop / Open Loop Control
+
+The UIM342 motor controller UIM342 supports both open loop control and closed-loop control.
+Open Loop Control – Set IC[6]=0 to enable this mode, which operates without feedback.
+Closed-Loop Control - Set IC[6]=1 to activate this mode, where feedback is provided by a
+quadrature encoder to ensure accurate displacement control.
+In the closed-loop control mode, a quadrature encoder is used for displacement feedback, providing
+more precision in motor positioning.
+Lines per Revolution (LPR)
+LPR is the number of lines engraved on the encoder’s disk. For each full revolution of the motor, the
+encoder completes one full rotation, generating 4* LPR pulses.
+Figure 2-5: Encoder LPR
+
+Encoder Resolution：8
+
+Encoder disk
+
+lines/revolution (i.e. 8 LPR)
+
+Pulses per Turn：8 * 4 = 32 Pulses/revolution
+
+Counts per Revolution (CPR)
+CPR specifies the number of pulses needed to rotate the motor one full turn. This is essential for
+closed-loop control in the UIM342, as it determines the pulse requirements for precise positioning.
+The CPR for the motor is determined by the formula:
+CPR = micro-stepping resolution * 200
+Where 200 is the number of steps per revolution for a standard stepper motor in full-step mode.
+[Example Calculation]
+For a micro-stepping resolution of 16, the CPR would be:
+CPR = 16 * 200 = 3200
+This means 3200 pulses are required to make the motor complete one full revolution.
+
+3.6
+
+Stall Detection
+
+The Stall Tolerance is the maximum allowed difference (pulses) between the encoder feedback and
+the actual driving pulses sent. When missing steps (pulses) accumulates to the Stall Tolerance, the
+stall will be detected. UIM 342 will handle the stall detection event.
+
+UIROBOT
+
+Page 27
+
+UIM342C/UIM342S/UIM342XS
+3.7
+
+Acquire Motion Status
+
+To facilitate quick query of motion status, the MS[i] instruction can be used as described below.
+
+
+
+Get Status Flags and Relative Position
+
+MS[0] is used to get the current motion status flags and the relative position. The ACK message for
+the MS[0] instruction is explained in the figure below:
+Figure 3-4 ACK for MS[0]
+
+ACK for MS[0]
+
+d1.bit<1:0>
+d1.bit2
+d1.bit3
+d1.bit4
+d1.bit5
+d1.bit6
+d1.bit7
+d2.bit0
+d2.bit1
+d2.bit2
+d2.bit3
+d2.bit4
+d2.bit5
+d2.bit6
+d2.bit7
+d3
+d7:d6:d5:d4
+
+ID
+
+CW
+
+DL
+
+d0
+
+d1
+
+d2
+
+d3
+
+ID
+
+11
+
+08
+
+00
+
+d1
+
+d2
+
+00
+
+d4
+
+d7
+
+…
+PR
+
+bit7 bit6 bit5 bit4 bit3 bit2 bit1 bit0
+
+bit7 bit6 bit5 bit4 bit3 bit2 bit1 bit0
+
+n/a
+
+ERR
+
+OP1
+
+IN3
+
+name
+Mode
+SON
+IN1
+IN2
+IN3
+OP1
+n/a
+STOP
+PAIF
+n/a
+TLIF
+n/a
+LOCK
+n/a
+ERR
+n/a
+PR
+
+IN2
+
+IN1
+
+SON
+
+Mode
+
+description
+motion mode
+motor driver
+IN1 Logic Level
+IN2 Logic Level
+IN3 Logic Level
+OP1 Logic Level
+Motor is in stationary
+Motor is in position
+Motor stall is detected
+System is locked down
+System error is detected
+Current relative position
+
+n/a
+
+LOCK
+
+n/a
+
+TLIF
+
+n/a
+
+PAIF
+STOP
+
+value
+0 = JOG; 1 = PTP
+0 = OFF; 1 = ON
+0 = Low; 1 = High
+0 = Low; 1 = High
+0 = Low; 1 = High
+0 = Low; 1 = High
+0
+0 = NO; 1 = YES
+0 = NO; 1 = YES
+0
+0 = NO; 1 = YES
+0
+0 = NO; 1 = YES
+0
+0 = NO; 1 = YES
+00
+Signed 32 bit integer, LSB received first
+
+Note: LSB - least significant byte
+
+
+Get Speed and Absolute Position
+
+MS[1] is used to get the current speed and absolute position.
+Figure 3-5 ACK f or MS[1]
+
+ACK for MS[1]
+
+d3:d2:d1
+d7:d6:d5:d4
+
+name
+SP
+PA
+
+ID
+
+CW
+
+DL
+
+d0
+
+ID
+
+11
+
+08
+
+01
+
+d1
+
+description
+Current speed
+Current absolute position
+
+d2
+SP
+
+d3
+
+d4
+
+d5
+
+d6
+
+d7
+
+PA
+
+value
+Signed 24 bit integer, LSB received first
+Signed 32 bit integer, LSB received first
+
+Note: LSB - least significant byte
+
+Page 28
+
+UIROBOT
+
+Motion Controller with CAN Interface
+
+
+Clear Status Flags
+
+“MS[0]=0” is used to clear the flag bit PAIF, TLIF and ERR. ACK message for the “MS[0]=0”
+instruction is explained in the figure below (values in the red boxes are cleared):
+Figure 3-5 ACK for MS[0]=0
+
+ACK for MS[0]=0
+
+UIROBOT
+
+ID
+
+CW
+
+DL
+
+d0
+
+d1
+
+d2
+
+d3
+
+ID
+
+MS
+
+08
+
+00
+
+d1
+
+d2
+
+00
+
+d4
+
+…
+
+d7
+
+PR
+
+bit7 bit6 bit5 bit4 bit3 bit2 bit1 bit0
+
+bit7 bit6 bit5 bit4 bit3 bit2 bit1 bit0
+
+n/a
+
+ERR
+
+OP1
+
+IN3
+
+IN2
+
+IN1
+
+SON
+
+Mode
+
+n/a
+
+LOCK
+
+n/a
+
+TLIF
+
+n/a
+
+PAIF
+STOP
+
+Page 29
+
+UIM342C/UIM342S/UIM342XS
+
+4.0
+
+Input Logic Control
+
+The input logic control module has the following functions:
+1)
+2)
+
+Processing and reporting the logic levels of input ports,
+Executing the following user preset actions, when the input logic level change is detected:
+ Motor Driver OFF,
+ Emergency stop (using SD),
+ Decelerating to stop (using DC),
+ Set origin then go reversed relative position (using |PR|, SP, AC, DC),
+ Set origin then Emergency stop (using SD),
+ Set origin then decelerate to stop (using DC),
+ Reversed Jog (using |SP|, AC, DC),
+ Jog (using SP, AC, DC),
+ Go reverse relative position (using |PR|, SP, AC, DC),
+ Go relative position (using PR, SP, AC, DC),
+ Go absolute position (using PA, SP, AC, DC).
+
+4.1
+
+Wiring the Sensor
+
+UIM342 input ports only takes 5V TTL signal.
+If a 3.3V TTL sensor is to be used, an NPN transistor should be added as shown in figure 4-1.
+It is recommended to use a photoelectric isolation module between the sensor and the INx port of the
+controller. The photoelectric isolation module has strong anti-interference properties and is
+recommended for use in factory environments and situations with significant interference. Please
+adjusting the resistance R to ensure that the current through the isolator is around 10 mA.
+Figure 4-1: UIM 342 input port wiring
+User sensor（3.3V TTL）
+
+User sensor
+
+User relay
+
+UIM342
+INx
+
+R
+
+NPN
+
+4.2
+
+AG
+
+R
+
+UIM342
+
+UIM342
+INx
+
+INx
+
+AG
+Opto-isolator
+
+AG
+
+Trigger modes
+
+The voltage on each input port can be processed with three types of trigger modes:
+
+
+Continuous Trigger Mode
+
+In this mode, UIM342 continuously samples the voltage on input ports. If a logic level change is
+detected, UIM342 will immediately notified the user and execute the preset logic actions.
+To use this mode of trigger, set “TG[i]=0”, i=0, 1 or 2.
+
+
+Low Pass Filter Mode
+
+Page 30
+
+UIROBOT
+
+Motion Controller with CAN Interface
+In this mode, UIM342 performs digital low-pass filtering on the input and then collects the level
+changes. This can eliminate jitters and prevent interference from digital inputs.
+Figure 4-2: Low-pass filter trigger
+Filter time T
+
+Filter time T
+
+Interference
+
+Port voltage
+
+Low pass filter
+
+The trigger threshold cannot be
+reached, so the filtering result
+remains unchanged.
+
+Filter results = 1
+Filter results = 0
+
+Filter results = 0
+
+Time
+
+To use this mode, set “TG[i] = T”, i=0, 1 or 2.
+This instruction sets the filter time of IN i to T ([1 ... 60000] ms).
+One-Time Trigger Mode
+
+
+
+In this Trigger Mode, UIM342 will processing a port level change only once.
+After that, the actions attached to the input port will be cleared and reset to none. User must set IL[i]
+again, in order to use the input logic again.
+To use this mode, set “TG[i] = 60001”, i=0, 1 or 2.
+This trigger mode is useful in finding/setting the position origin, preventing the oscillation caused by
+repeated detection.
+
+4.3
+
+Configure / Attach Input Logic Action
+
+Action attached to the input port i is configured by the instruction IL[i] (i=0, 1 or 2), which is
+defined as follows:
+Figure 4-3: Instruction to attach Logic Action
+
+IL[i]=N
+
+ID
+
+CW
+
+DL
+
+d0
+
+d1
+
+d2
+
+ID
+
+IL
+
+03
+
+i
+
+d1
+
+d2
+
+d3
+
+…
+
+d7
+
+00
+
+Input Port Index
+bit7 bit6 bit5 bit4 bit3 bit2 bit1 bit0
+FG
+Action Code
+
+bit7 bit6 bit5 bit4 bit3 bit2 bit1 bit0
+FG
+Action Code
+
+Falling edge action
+
+Rising edge action
+
+FG – Flag for Power-On Execution.
+0 = Execute the action code automatically when power on, disregard the input logic level. This
+will create a power-on action.
+1 = Prohibit Executing the Action Code when power on, until an input logic level change
+happened.
+i – Index of Input Ports. i = 0, 1 or 2 represents IN1, IN2 and IN3 respectively.
+Action Codes are listed below, that can be attached to the rising/falling edge of the inputs:
+
+UIROBOT
+
+Page 31
+
+UIM342C/UIM342S/UIM342XS
+Action Code
+0x00
+0x01
+
+Action Description
+
+Illustration
+n/a
+
+No action
+Turn the Motor Driver off, freewheel
+
+H-Bridge
+
+Motor
+
+Drive OFF, freewheel
+
+0x02
+
+0x03
+
+Emergency stop (using SD)
+
+Decelerating to stop (using DC)
+
+V
+
+STOP
+SD
+
+T
+
+V
+DC
+T
+
+0x04
+
+0x05
+
+Set origin then go reversed relative position (using
+|PR|, SP, AC, DC)
+
+Set origin then Emergency stop (using SD)
+
+0x06
+
+Set origin then decelerate to stop (using DC)
+
+0x07
+
+Reversed Jogging (using |SP|, AC, DC)
+
+0x08
+
+0x09
+
+0x0A
+
+POS0
+
+V
+SD
+
+T
+
+V
+DC
+
+STOP
+
+POS0
+Slow Down
+Stop
+T
+
+Reverse
+Run |SP|
+
+|SP|
+
+Jog (using SP, AC, DC)
+
+Run SP
+SP<0 SP>0
+
+Go reverse relative position (using |PR|, SP, AC, DC)
+
+Reverse
+Go |PR|
+
+|PR|
+
+Go relative position (using PR, SP, AC, DC)
+
+Go PR
+PR>0
+Pc
+
+Go absolute position (using PA, SP, AC, DC)
+PA<Pc
+
+Page 32
+
+Slow Down
+Stop
+
+POS0
+Reverse
+Go |PR|
+
+|PR|
+
+PR<0
+
+0x0B
+
+E-Stop
+
+Go PA
+
+PA>Pc
+
+UIROBOT
+
+Motion Controller with CAN Interface
+4.4
+
+Real-time Notification for Input Change
+
+When the logic level change on a specific input port is detected, there will be a real-time
+notification message sent to user. That message could be enabled or disabled by setting “IE[i]=1”
+or “IE[i]=0” respectively. Here, i=0, 1 or 2 represents IN1, IN2 and IN3 respectively.
+
+UIROBOT
+
+Page 33
+
+UIM342C/UIM342S/UIM342XS
+
+5.0
+
+Instruction Set
+
+This chapter provides details of instructions supported by UIM342.
+Note:
+1.
+
+Unless otherwise specified, all message bytes are in hex format;
+
+2.
+
+Examples assume that the UIM342 address is 5 (ID=5) ;
+
+3.
+
+Abbreviation definitions as below:
+a)
+
+INST – Instruction
+
+b)
+
+ACK – Acknowledgment / Reply
+
+Page 34
+
+UIROBOT
+
+Motion Controller with CAN Interface
+5.1
+
+PP[i] Protocol Parameter
+
+Protocol Parameter
+
+CW
+
+Disable ACK
+
+0x01
+
+Request ACK
+
+0x81
+
+DATA
+
+Sub-Index(i)
+
+unsigned 8 bit
+
+Data
+
+unsigned 8 bit
+
+Get Protocol Parameters
+
+PP[i]
+
+INST data length
+ACK data length
+
+Set Protocol Parameters
+
+PP[i]=N
+
+INST data length
+ACK data length
+
+Description
+
+2
+2
+
+Data
+Data
+
+d0 (=i)
+d0 (=i), d1
+
+Data
+Data
+
+d0 (=i), d1
+d0 (=i), d1
+
+i
+
+Description
+
+5
+
+CAN bit rate (bps)
+
+0: 1000K 1: 800K 2: 500K 3: 250K 4: 125K
+
+7
+
+Node ID
+
+5…126
+
+8
+
+Group ID
+
+5…126
+
+INST
+Example
+GET
+
+1
+2
+
+ID
+05
+
+CW
+81
+
+Value (N)
+
+DL
+01
+
+d0
+08
+
+d1
+00
+
+d2
+00
+
+d3
+00
+
+d4
+00
+
+d5
+00
+
+d6
+00
+
+d7
+00
+
+d1
+0A
+
+d2
+00
+
+d3
+00
+
+d4
+00
+
+d5
+00
+
+d6
+00
+
+d7
+00
+
+d4
+00
+
+d5
+00
+
+d6
+00
+
+d7
+00
+
+d5
+00
+
+d6
+00
+
+d7
+00
+
+Sub-index d0 = 8 (Get Group ID).
+ACK
+
+ID
+05
+
+CW
+01
+
+DL
+02
+
+d0
+08
+
+Sub-index d0 = 8 (Group ID). Data d1 = 0x0A (=10).
+
+INST
+Example
+SET
+
+ID
+05
+
+CW
+81
+
+DL
+02
+
+d0
+05
+
+d1
+02
+
+d2
+00
+
+d3
+00
+
+Sub-index d0 = 5 (CAN bit rate). Data d1 = 2 (SET 500K).
+ACK
+
+ID
+05
+
+CW
+01
+
+DL
+02
+
+d0
+05
+
+d1
+02
+
+d2
+00
+
+d3
+00
+
+d4
+00
+
+Sub-index d0 = 5 (CAN bit rate). Data d1 = 2 (=500K).
+
+Note
+
+UIROBOT
+
+
+
+The value of PP[i] will be automatically saved to FLASH memory with a
+10,000 write lifespan.
+
+
+
+Within a specific CAN network, Node IDs and Group IDs of all UIM devices
+should never be overlapped.
+
+
+
+Protocol Parameters will take effectiveness after reboot the UIM device.
+
+Page 35
+
+UIM342C/UIM342S/UIM342XS
+5.2
+
+IC[i] Initial Configuration
+
+System Settings
+
+CW
+
+Disable ACK
+
+0x06
+
+Request ACK
+
+0x86
+
+DATA
+
+Sub-Index(i)
+
+unsigned 8 bit
+
+Data
+
+unsigned 16 bit
+
+IC[i]
+
+Get initial state configuration of UIM342 when Power-On
+INST data length
+1
+Data
+d0 (=i)
+ACK data length
+3
+Data
+d0 (=i), d1, d2
+
+IC[i]=N
+
+Set initial state configuration of UIM342 when Power-On
+INST data length
+3
+Data
+d0 (=i), d1, d2
+ACK data length
+3
+Data
+d0 (=i), d1, d2
+
+i
+
+Description
+
+Description
+
+0
+
+Turn motor driver on after power is on
+
+1
+
+Positive motor direction
+
+0: disable
+0: CW
+
+1: enable;
+1: CCW
+
+2
+
+Execute the user program after power is on
+
+0: NO
+
+1: YES
+
+3
+
+Lock down the system when Input Logic EStop is triggered.
+
+0: disable
+
+1: enable
+
+4
+
+Units of AC and DC
+
+0: pulse/sec2
+
+1: millisecond
+
+5
+
+Encoder type
+
+0: Incremental
+
+1: Absolute
+
+6
+
+Using Closed-loop control
+
+0: Open loop
+
+1: Closed-loop
+
+7
+
+Enable software limit
+
+0: disable
+
+1: enable
+
+INST
+
+Example
+GET
+
+Example
+SET
+
+Value (N)
+
+ID
+05
+
+CW
+86
+
+DL
+01
+
+d0
+00
+
+d1
+00
+
+d2
+00
+
+d3
+00
+
+d4
+00
+
+d5
+00
+
+d6
+00
+
+d7
+00
+
+ID CW DL d0 d1 d2 d3 d4
+05 06 03 00 01 00 00 00
+Sub-index d0 = 0 (Turn motor driver on after power is on);
+Data [d2:d1] = 0x0001 (Enable).
+
+d5
+00
+
+d6
+00
+
+d7
+00
+
+INST
+
+d4
+00
+
+d5
+00
+
+d6
+00
+
+d7
+00
+
+d4
+00
+
+d5
+00
+
+d6
+00
+
+d7
+00
+
+Sub-index d0 = 0 (Turn motor driver on after power is on).
+ACK
+
+ID
+05
+
+CW
+86
+
+DL
+03
+
+d0
+06
+
+d1
+01
+
+d2
+00
+
+d3
+00
+
+Sub-index d0 = 6 (Using Closed-loop control);
+Data [d2:d1] = 0x0001 (SET Closed-loop control).
+ACK
+
+ID
+05
+
+CW
+06
+
+DL
+03
+
+d0
+06
+
+d1
+01
+
+d2
+00
+
+d3
+00
+
+Sub-index d0 = 6 (Using Closed-loop control);
+Data [d2:d1] = 0x0001 (Closed-loop control).
+
+Note
+
+Page 36
+
+
+
+
+Once “IC[i]=N” is set, the UIM device will reboot. Getting “IC[i]”
+will not cause a reboot.
+When using an absolute encoder, IC[1] must be 1 .
+Once the System is locked down, only reboot will unlock the system.
+
+UIROBOT
+
+Motion Controller with CAN Interface
+5.3
+
+IE[i] Information Enable
+
+System Settings
+
+CW
+
+Disable ACK
+
+0x07
+
+Request ACK
+
+0x87
+
+DATA
+
+Sub-Index(i)
+
+unsigned 8 bit
+
+Data
+
+unsigned 16 bit
+
+Get Information Enable Configuration
+
+IE[i]
+
+INST data length
+ACK data length
+IE[i]=N
+
+Data
+Data
+
+d0 (=i)
+d0 (=i), d1, d2
+
+Set Information Enable Configuration
+INST data length
+ACK data length
+
+Description
+i
+
+3
+3
+
+Data
+Data
+
+d0 (=i), d1, d2
+d0 (=i), d1, d2
+
+Description
+
+Value (N)
+
+0
+
+Port IN1 change notification
+
+0: disable
+
+1: enable
+
+1
+
+Port IN2 change notification
+
+0: disable
+
+1: enable
+
+2
+
+Port IN3 change notification
+
+8
+
+PTP positioning finish notification
+
+0: disable
+0: disable
+
+1: enable
+1: enable
+
+INST
+Example
+GET
+
+1
+3
+
+ID
+05
+
+CW
+87
+
+DL
+01
+
+d0
+00
+
+d1
+00
+
+d2
+00
+
+d3
+00
+
+d4
+00
+
+d5
+00
+
+d6
+00
+
+d7
+00
+
+d2
+00
+
+d3
+00
+
+d4
+00
+
+d5
+00
+
+d6
+00
+
+d7
+00
+
+Sub-index d0 = 0 (Get IN1 I.E. configure).
+ACK
+
+ID
+05
+
+CW
+07
+
+DL
+03
+
+d0
+00
+
+d1
+01
+
+Sub-index d0 = 0 (IN1 I.E. configure); Data [d2:d1] = 0x0001 (Enable).
+INST
+Example
+SET
+
+ID
+05
+
+CW
+87
+
+DL
+03
+
+d0
+01
+
+d1
+01
+
+d2
+00
+
+d3
+00
+
+d4
+00
+
+d5
+00
+
+d6
+00
+
+d7
+00
+
+Sub-index d0 = 1 (IN2 I.E. configure); Data [d2:d1] = 0x0001 (SET Enable).
+ACK
+
+ID
+05
+
+CW
+07
+
+DL
+03
+
+d0
+01
+
+d1
+01
+
+d2
+00
+
+d3
+00
+
+d4
+00
+
+d5
+00
+
+d6
+00
+
+d7
+00
+
+Sub-index d0 = 0 (IN2 I.E. configure); Data [d2:d1] = 0x0001 (Enabled).
+
+Note
+
+UIROBOT
+
+
+
+Set/Get the information enable configuration.
+
+
+
+To receive the real-time change notification, the corresponding information
+enable bit must be set (=1).
+
+
+
+Refer to chapter 2.4 for more details about real-time change notification.
+
+Page 37
+
+UIM342C/UIM342S/UIM342XS
+5.4
+
+ML Model
+CW
+
+System Settings
+Disable ACK
+
+n/a
+
+Request ACK
+
+DATA
+
+0x8B
+
+n/a
+ML
+
+Description
+
+Get the model, function module and firmware version
+
+INST data length
+ACK data length
+
+0
+8
+
+Data
+Data
+
+n/a
+
+d0, d1, d2, d3, d4, d5, d6, d7
+
+INST
+
+ID
+05
+
+CW
+8B
+
+DL
+00
+
+d0
+00
+
+d1
+00
+
+d2
+00
+
+d3
+00
+
+d4
+00
+
+d5
+00
+
+d6
+00
+
+d7
+00
+
+ACK
+
+ID
+05
+
+CW
+0B
+
+DL
+08
+
+d0
+20
+
+d1
+0A
+
+d2
+11
+
+d3
+00
+
+d4
+00
+
+d5
+00
+
+d6
+00
+
+d7
+00
+
+For UIM342 series, please refer to the following table for model information.
+
+Example
+GET
+
+model
+
+d0
+
+d1
+
+d2
+
+d3
+
+342XS
+
+0x20
+
+0x0A
+
+0x11
+
+xx
+
+342S
+
+0x21
+
+0x0A
+
+0x11
+
+xx
+
+342C02
+
+0x22
+
+0x14
+
+0x13
+
+xx
+
+342C04
+
+0x22
+
+0x28
+
+0x13
+
+xx
+
+342C08
+
+0x22
+
+0x50
+
+0x13
+
+xx
+
+342H08
+
+0x22
+
+0x50
+
+0x19
+
+xx
+
+d5:d4
+Firmware
+version
+Firmware
+version
+Firmware
+version
+Firmware
+version
+Firmware
+version
+Firmware
+version
+
+d7:d6
+xxxx
+xxxx
+xxxx
+xxxx
+xxxx
+xxxx
+
+x – Factory use, don’t care.
+
+Page 38
+
+UIROBOT
+
+Motion Controller with CAN Interface
+5.5
+
+SN Serial Number
+CW
+
+System Settings
+
+Disable ACK
+
+0x0C
+
+DATA
+
+Description
+
+UIROBOT
+
+0x8C
+
+n/a
+SN
+
+Example
+GET
+
+Request ACK
+
+Get the serial number of the device
+
+INST data length
+ACK data length
+
+0
+8
+
+Data
+Data
+
+n/a
+
+d0, d1, d2, d3, d4, d5, d6, d7
+
+INST
+
+ID
+05
+
+CW
+8C
+
+DL
+00
+
+d0
+00
+
+d1
+00
+
+d2
+00
+
+d3
+00
+
+d4
+00
+
+d5
+00
+
+d6
+00
+
+d7
+00
+
+ACK
+
+ID
+05
+
+CW
+0C
+
+DL
+08
+
+d0
+01
+
+d1
+02
+
+d2
+03
+
+d3
+04
+
+d4
+05
+
+d5
+06
+
+d6
+07
+
+d7
+08
+
+Data
+[d3:d2:d1:d0] = 0x04030201 (Serial number 0067305985).
+[d5:d4] = 0x0605 (Manufacturer ID 1541).
+[d7:d6] = 0x0807 (Vendor ID 2055).
+
+Page 39
+
+UIM342C/UIM342S/UIM342XS
+5.6
+
+System Settings
+
+ER[i] Error Report
+CW
+
+Disable ACK
+
+0x0F
+
+Request ACK
+
+0x8F
+
+DATA
+
+Sub-Index(i)
+
+unsigned 8 bit
+
+Data
+
+unsigned 8 bit
+
+Get Error Report
+
+ER[i]
+
+INST data length
+ACK data length
+
+Clear Error Report
+
+ER[i]=0
+
+INST data length
+ACK data length
+
+Description
+
+1
+6
+
+2
+6
+
+i
+
+d0 (=i)
+d0 (=i), d1, d2, d3, d4, d5
+
+Data
+Data
+
+d0 (=i), d1, d2
+d0 (=i), d1, d2, d3, d4, d5
+
+Description
+
+0
+
+Get / Clear The latest error content
+
+6
+
+Get / Clear Power on error
+
+10
+
+Get / Clear latest errors
+
+11…18
+
+Data
+Data
+
+Get / Clear the last 2…9 errors
+
+Refer to chapter 2.3 “Error Report” for the description of d0, d1, d2, d3, d4, d5.
+INST
+
+Example
+GET
+
+ID CW DL d0 d1 d2
+05 8F 01 00 00 00
+Sub-index d0 = 0 (Get the newest error).
+
+d3
+00
+
+d4
+00
+
+d5
+00
+
+d6
+00
+
+d7
+00
+
+ACK
+
+d3
+05
+
+d4
+00
+
+d5
+00
+
+d6
+00
+
+d7
+00
+
+ID
+05
+
+CW
+0F
+
+DL
+06
+
+d0
+00
+
+d1
+33
+
+d2
+81
+
+Sub-index d0 = 0 (The newest error).
+Data
+d1 = 0x33 (Error code = 0x33, i.e. instruction data error).
+d2 = 0x81 (CW related to the error = 0x81, i.e. PP).
+d3 = 0x05 (Sub-Index of the CW related to the error = 5).
+d4, d5 = 0x00 (Reserve).
+The newest error = "In the instruction PP[5]=N, the data is illegal".
+INST
+
+Example
+SET
+
+ID CW DL d0 d1 d2 d3 d4
+05 8F 02 00 00 00 00 00
+Sub-index d0 = 0 (Latest error); Data d1 = 0 (SET clear).
+
+d5
+00
+
+d6
+00
+
+d7
+00
+
+ACK
+
+d5
+00
+
+d6
+00
+
+d7
+00
+
+ID
+05
+
+CW
+0F
+
+DL
+06
+
+d0
+00
+
+d1
+00
+
+d2
+00
+
+d3
+00
+
+d4
+00
+
+Sub-index d0 = 0 (Latest error); Data d5…d1 = 0 (Cleared, no errors).
+
+Page 40
+
+UIROBOT
+
+Motion Controller with CAN Interface
+5.7
+
+QE[i] Quadrature Encoder
+
+System Settings
+
+CW
+
+Disable ACK
+
+0x3D
+
+Request ACK
+
+0xBD
+
+DATA
+
+Sub-Index(i)
+
+unsigned 8 bit
+
+Data
+
+unsigned 16 bit
+
+Get Encoder Parameters
+
+QE[i]
+
+INST data length
+ACK data length
+QE[i]=N
+
+1
+3
+
+Set Encoder Parameters
+
+INST data length
+ACK data length
+
+3
+3
+
+Data
+Data
+
+d0 (=i)
+d0 (=i), d1, d2
+
+Data
+Data
+
+d0 (=i), d1, d2
+d0 (=i), d1, d2
+
+Description
+i
+
+Description
+
+Value (N)
+
+0
+
+Lines per revolution of encoder (LPR)
+
+1..65535,
+
+1
+
+Stall tolerance
+
+10..65535 counts
+
+2
+
+Single-turn bits of absolute encoder
+
+17, 20.bits
+
+3
+
+Battery status of absolute encoder
+
+1: OK 0: Low
+
+4
+
+Counts per revolution (CPR = Micro Steps*200)
+
+200..25600 (1..128*200)
+
+INST
+
+Example
+GET
+
+ID CW DL d0 d1 d2 d3 d4 d5
+05 BD 04 04 00 00 00 00 00
+Sub-index d0 = 4 (Counts per revolution for closed-loop control).
+
+d6
+00
+
+d7
+00
+
+ACK
+
+d6
+00
+
+d7
+00
+
+ID
+05
+
+CW
+3D
+
+DL
+03
+
+d0
+04
+
+d1
+80
+
+d2
+0C
+
+d3
+00
+
+d4
+00
+
+d5
+00
+
+Sub-index d0 = 4 (Counts per revolution for closed-loop control);
+Data [d2:d1] = 0x0C80 (3200).
+
+Example
+SET
+
+INST
+
+ID CW DL d0 d1 d2 d3
+05 BD 03 00 E8 03 00
+Sub-Index d0 = 0 (Lines per revolution of encoder);
+Data [d2:d1] = 0x03E8 (SET 1000).
+
+d4
+00
+
+d5
+00
+
+d6
+00
+
+d7
+00
+
+ACK
+
+d4
+00
+
+d5
+00
+
+d6
+00
+
+d7
+00
+
+ID CW DL d0 d1 d2 d3
+05 3D 03 00 E8 03 00
+Sub-Index d0 = 0 (Lines per revolution of encoder);
+Data [d2:d1] = 0x03E8 (1000).
+
+Note
+
+ QE[0] LPR is a key physical property of the encoder. Setting it incorrectly
+can cause unpredictable behavior.
+ Save QE[i] to EEPROM (EEP) only when the motor driver is off. If saved
+while the motor driver is on, QE[i] will remain in RAM and be lost upon power
+off.
+ Adjust QE[4] CPR by changing the micro-stepping resolution (MT[0]). After
+adjustment, power off and restart the system for changes to take effect.
+
+UIROBOT
+
+Page 41
+
+UIM342C/UIM342S/UIM342XS
+5.8
+
+System Settings
+
+SY[i] System Operation
+CW
+
+Disable ACK
+
+0x7E
+
+Request ACK
+
+n/a
+
+DATA
+
+Sub-Index(i)
+
+unsigned 8 bit
+
+Data
+
+n/a
+
+SY[i]
+
+System Operation
+INST data length
+No ACK
+
+Description
+
+i
+
+Data
+
+d0 (=i)
+
+Description
+
+1
+
+Reboot the system
+
+2
+
+Restore factory defaults
+
+INST
+Example
+SET
+
+1
+
+ID
+05
+
+CW
+7E
+
+DL
+01
+
+d0
+01
+
+d1
+00
+
+d2
+00
+
+d3
+00
+
+d4
+00
+
+d5
+00
+
+d6
+00
+
+d7
+00
+
+Sub-Index d0 = 1 (Reboot the device).
+ACK : n/a
+
+Page 42
+
+UIROBOT
+
+Motion Controller with CAN Interface
+5.9
+
+MT[i] Motor Driver
+
+Motor Driver
+
+CW
+
+Disable ACK
+
+0x10
+
+Request ACK
+
+0x90
+
+DATA
+
+Sub-Index(i)
+
+unsigned 8 bit
+
+Data
+
+unsigned 16 bit
+
+Get Motor Drive Parameters
+
+MT[i]
+
+INST data length
+ACK data length
+MT[i]=N
+
+1
+3
+
+Set Motor Drive Parameters
+INST data length
+ACK data length
+
+Description
+i
+
+3
+3
+
+Data
+Data
+
+d0 (=i)
+d0 (=i), d1, d2
+
+d0 (=i), d1, d2
+d0 (=i), d1, d2
+
+Description
+
+Value (N)
+
+0
+
+Micro-stepping resolution
+
+1/2/4/8/16/32/64
+
+1
+
+Working current
+
+5 ... 80 (= 0.5 ... 8.0 Amp)
+
+2
+
+Percentage of idle current over working current
+
+0...100 (= 0...100%)
+
+3
+
+Delay of automatic enable after power-on
+
+0...60000 (millisecond)
+
+INST
+
+Example
+GET
+
+Data
+Data
+
+ID CW DL d0 d1
+05 90 01 01 00
+Sub-index d0 = 1 (Working current).
+
+d2
+00
+
+d3
+00
+
+d4
+00
+
+d5
+00
+
+d6
+00
+
+d7
+00
+
+ACK
+
+d2
+00
+
+d3
+00
+
+d4
+00
+
+d5
+00
+
+d6
+00
+
+d7
+00
+
+INST
+
+ID CW DL d0 d1 d2
+05 90 01 00 10 00
+Sub-index d0 = 0 (Micro-stepping resolution);
+Data [d2:d1] = 0x0010 (SET 16).
+
+d3
+00
+
+d4
+00
+
+d5
+00
+
+d6
+00
+
+d7
+00
+
+ACK
+
+d3
+00
+
+d4
+00
+
+d5
+00
+
+d6
+00
+
+d7
+00
+
+ID
+05
+
+CW
+10
+
+DL
+03
+
+d0
+01
+
+d1
+1C
+
+Sub-index d0 = 1 (Working current);
+Data [d2:d1] = 0x001C (2.8 Amp).
+
+Example
+SET
+
+Note
+
+UIROBOT
+
+ID CW DL d0 d1 d2
+05 10 03 00 10 00
+Sub-index d0 = 0 (Micro-stepping resolution);
+Data [d2:d1] = 0x0010 (16).
+
+Only when the Motor Driver is off, value of MT[i] will be saved to EEP.
+Otherwise, MT[i] will only exist in RAM and will be lost when power off.
+When setting micro-stepping resolution, counts per revolution for closed-loop
+control needs to be set simultaneously. After the setting is completed, it needs to
+be powered off and restarted to take effect.
+
+Page 43
+
+UIM342C/UIM342S/UIM342XS
+5.10 MO Motor Driver On /Off
+CW
+
+Motor Driver
+
+Disable ACK
+
+0x15
+
+DATA
+
+Request ACK
+unsigned 8 bit
+
+Get Motor Drive ON/OFF status
+
+MO
+
+INST data length
+ACK data length
+
+Description
+
+0x95
+
+0
+1
+
+Set Motor Drive ON/OFF
+
+MO=N
+
+Data
+Data
+
+n/a
+d0
+
+Data
+Data
+
+d0
+d0
+
+INST data length
+ACK data length
+
+1
+1
+
+ID CW DL d0
+05 95 00 00
+Get motor driver on/off status.
+
+d1
+00
+
+d2
+00
+
+d3
+00
+
+d4
+00
+
+d5
+00
+
+d6
+00
+
+d7
+00
+
+ACK
+
+d1
+00
+
+d2
+00
+
+d3
+00
+
+d4
+00
+
+d5
+00
+
+d6
+00
+
+d7
+00
+
+ID CW DL d0 d1
+05 95 01 00 00
+Data d0 = 0 (SET motor driver OFF).
+
+d2
+00
+
+d3
+00
+
+d4
+00
+
+d5
+00
+
+d6
+00
+
+d7
+00
+
+ACK
+
+d2
+00
+
+d3
+00
+
+d4
+00
+
+d5
+00
+
+d6
+00
+
+d7
+00
+
+N = 0: OFF;
+N = 1: ON.
+INST
+
+Example
+GET
+
+ID
+05
+
+CW
+15
+
+DL
+01
+
+d0
+01
+
+Data d0 = 1 (Motor driver is ON).
+INST
+
+Example
+SET
+
+ID
+05
+
+CW
+15
+
+DL
+01
+
+d0
+00
+
+d1
+00
+
+Data d0 = 0 (Motor driver is OFF).
+
+
+Note
+
+Page 44
+
+
+
+
+Make sure the motor driver is ON (MO=1), before sending instructions such
+as SP, PR, JV and BG etc. Otherwise, unexpected movement will happen
+(caused by previous residual actions) when turning on the motor driver.
+The motor can be driven only after the motor driver is ON.
+In OFF status, the motor is freewheel, but the logic circuit still works.
+
+UIROBOT
+
+Motion Controller with CAN Interface
+5.11 BG Begin Motion
+CW
+
+Motion Control
+
+Disable ACK
+
+0x16
+
+DATA
+
+0x96
+
+n/a
+BG
+
+Description
+
+Begin Motion
+
+INST data length
+ACK data length
+
+INST
+
+Example
+GET
+
+Request ACK
+
+0
+4
+
+Data
+Data
+
+n/a
+d0, d1, d2, d3
+
+ID
+05
+Begin Motion.
+
+CW
+96
+
+DL
+00
+
+d0
+00
+
+d1
+00
+
+d2
+00
+
+d3
+00
+
+d4
+00
+
+d5
+00
+
+d6
+00
+
+d7
+00
+
+ACK
+
+CW
+16
+
+DL
+04
+
+d0
+00
+
+d1
+00
+
+d2
+00
+
+d3
+00
+
+d4
+00
+
+d5
+00
+
+d6
+00
+
+d7
+00
+
+ID
+05
+
+Data d0…d3 = 0 (don’t care).
+
+Note
+
+Activate the newly set parameters and start moving. Applied to PTP and JOG
+motion control. The motor will not move until BG is entered. Motion parameters
+(e.g. SP/PR/PA/JV) will then be activated and motion will begin.
+When multiple UIM342 are to move at the same time, user can set the parameters
+like SP/PA to each node ID first, and then send BG to the global ID or group ID.
+
+UIROBOT
+
+Page 45
+
+UIM342C/UIM342S/UIM342XS
+5.12 ST Stops Motion
+CW
+
+Motion Control
+
+Disable ACK
+
+0x17
+
+DATA
+
+Description
+
+Stop Motion
+
+INST data length
+ACK data length
+
+INST
+
+Note
+
+Page 46
+
+0x97
+
+n/a
+ST
+
+Example
+GET
+
+Request ACK
+
+0
+0
+
+Data
+Data
+
+n/a
+n/a
+
+ID
+05
+Stop Motion.
+
+CW
+97
+
+DL
+00
+
+d0
+00
+
+d1
+00
+
+d2
+00
+
+d3
+00
+
+d4
+00
+
+d5
+00
+
+d6
+00
+
+d7
+00
+
+ACK
+
+CW
+17
+
+DL
+00
+
+d0
+00
+
+d1
+00
+
+d2
+00
+
+d3
+00
+
+d4
+00
+
+d5
+00
+
+d6
+00
+
+d7
+00
+
+ID
+05
+
+Stop current movement, using stop deceleration (SD) to decelerate.
+
+UIROBOT
+
+Motion Controller with CAN Interface
+5.13 MF Motion Parameter Frame
+CW
+
+Motion Control
+
+Disable ACK
+
+0x18
+
+DATA
+
+Request ACK
+
+0x98
+
+unsigned 8 bit
+Set/select motion parameter group to be operated.
+
+MF=N
+
+INST data length
+ACK data length
+
+1
+1
+
+Data
+Data
+
+N
+
+Description
+
+d0
+d0
+
+Description
+
+0
+
+Select the motion parameter group for normal operation
+
+1
+
+Reserved
+
+2
+
+Select the motion parameter group for the rising edge of IN1
+
+3
+
+Select the motion parameter group for the falling edge of IN1
+
+4
+
+Select the motion parameter group for the rising edge of IN2
+
+5
+
+Select the motion parameter group for the falling edge of IN2
+
+6
+
+Select the motion parameter group for the rising edge of IN3
+
+7
+
+Select the motion parameter group for the falling edge of IN3
+
+INST
+
+Example
+SET
+
+ID CW DL d0 d1 d2 d3 d4 d5 d6 d7
+05 98 01 03 00 00 00 00 00 00 00
+Data d0 = 3 (Select the motion parameter group for the falling edge of IN1).
+ACK
+
+ID CW DL d0 d1 d2 d3 d4 d5 d6
+05 18 01 03 00 00 00 00 00 00
+Data d0 = 3 (The motion parameter group for the falling edge of IN1).
+
+d7
+00
+
+The UIM342 supports different motion parameter groups for preset actions
+triggered by different sources. MF=N provides a method to use same instruction
+(e.g. AC) to assign a motion parameter to different groups.
+Normal Operation
+AC [0]
+DC [0]
+SS [0]
+SP [0]
+PR [0]
+PA [0]
+
+Note
+
+UIROBOT
+
+IN1
+
+IN1
+
+AC [2]
+DC [2]
+SS [2]
+SP [2]
+PR [2]
+PA [2]
+
+AC [3]
+DC [3]
+SS [3]
+SP [3]
+PR [3]
+PA [3]
+
+IN3
+AC [7]
+DC [7]
+SS [7]
+SP [7]
+PR [7]
+PA [7]
+
+
+
+For example, to set the acceleration of IN1 falling edge to 1000, using: MF=1;
+AC=1000; To get the acceleration of IN1 falling edge, using: MF=1; AC;
+
+
+
+After setting/getting a parameter, MF value will automatically reset to 0.
+
+Page 47
+
+UIM342C/UIM342S/UIM342XS
+5.14 AC Acceleration
+CW
+
+Motion Control
+
+Disable ACK
+
+0x19
+
+DATA
+
+0x99
+
+unsigned 32 bit
+AC
+
+Get Acceleration
+INST data length
+ACK data length
+
+AC=N
+
+Set Acceleration
+INST data length
+ACK data length
+
+Description
+
+Request ACK
+
+0
+4
+
+Data
+Data
+
+n/a
+
+4
+4
+
+Data
+Data
+
+d0, d1, d2, d3
+d0, d1, d2, d3
+
+d0, d1, d2, d3
+
+When IC[4]=0, acceleration is defined as rate, N=1…65,000,000 (pulse/sec2 ).
+When IC[4]=1, acceleration is defined as time, N=1…60,000 (ms)
+(1) Acceleration Time (ms)
+
+V
+
+Desired speed
+Current speed
+
+(2) Acceleration Rate (pulse/sec2 )
+T（time）
+
+INST
+Example
+GET
+
+Example
+SET
+
+Note
+
+ID
+05
+
+CW
+99
+
+DL
+00
+
+d0
+00
+
+d1
+00
+
+d2
+00
+
+d3
+00
+
+d4
+00
+
+d5
+00
+
+d6
+00
+
+d7
+00
+
+ACK
+
+ID CW DL d0 d1 d2 d3 d4
+05 19 04 E8 03 00 00 00
+Data [d3:d2:d1:d0] = 0x03e8 (The acceleration is 1000).
+
+d5
+00
+
+d6
+00
+
+d7
+00
+
+INST
+
+ID CW DL d0 d1 d2 d3 d4
+05 99 00 F4 01 00 00 00
+Data [d3:d2:d1:d0] = 0x01f4 (SET acceleration 500).
+
+d5
+00
+
+d6
+00
+
+d7
+00
+
+ACK
+
+d5
+00
+
+d6
+00
+
+d7
+00
+
+Get AC.
+
+ID CW DL d0 d1 d2 d3 d4
+05 19 04 F4 01 00 00 00
+Data [d3:d2:d1:d0] = 0x01f4 (The acceleration is 500).
+
+• Only when the Motor Driver is off, value of AC will be saved to EEP. Otherwise,
+AC will only exist in RAM and will be lost when power off.
+
+• After setting, AC will takes effect when the next BG is commanded.
+
+Page 48
+
+UIROBOT
+
+Motion Controller with CAN Interface
+5.15 DC Deceleration
+CW
+
+Motion Control
+
+Disable ACK
+
+0x1A
+
+DATA
+
+Request ACK
+unsigned 32 bit
+
+DC
+
+Get Deceleration
+
+INST data length
+ACK data length
+DC=N
+
+Set Deceleration
+
+INST data length
+ACK data length
+
+Description
+
+0
+4
+
+Data
+Data
+
+n/a
+
+d0, d1, d2, d3
+
+4
+4
+
+Data
+Data
+
+d0, d1, d2, d3
+d0, d1, d2, d3
+
+When IC[4]=0, deceleration is defined as rate, N=1…65,000,000 (pulse/sec2).
+When IC[4]=1, deceleration is defined as time, N=1…60,000 (ms)
+(1) Deceleration Time (ms)
+
+V
+
+Current speed
+
+Desired speed
+
+(2) Deceleration Rate (pulse/sec2)
+
+INST
+Example
+GET
+
+Example
+SET
+
+Note
+
+UIROBOT
+
+0x9A
+
+ID
+05
+
+CW
+9A
+
+DL
+00
+
+d0
+00
+
+d1
+00
+
+d2
+00
+
+T（time）
+
+d3
+00
+
+d4
+00
+
+d5
+00
+
+d6
+00
+
+d7
+00
+
+ACK
+
+ID CW DL d0 d1 d2 d3 d4
+05 1A 04 E8 03 00 00 00
+Data [d3:d2:d1:d0] = 0x03e8 (The deceleration is 1000).
+
+d5
+00
+
+d6
+00
+
+d7
+00
+
+INST
+
+ID CW DL d0 d1 d2 d3 d4
+05 9A 04 E9 03 00 00 00
+Data [d3:d2:d1:d0] = 0x03e9 (SET deceleration 1001).
+
+d5
+00
+
+d6
+00
+
+d7
+00
+
+ACK
+
+d5
+00
+
+d6
+00
+
+d7
+00
+
+Get DC.
+
+ID CW DL d0 d1 d2 d3 d4
+05 1A 04 E9 03 00 00 00
+Data [d3:d2:d1:d0] = 0x03e9 (The deceleration is 1001).
+
+• Only when the Motor Driver is off, value of DC will be saved to EEP.
+Otherwise, DC will only exist in RAM and will be lost when power off.
+• After setting, DC will takes effect when the next BG is commanded.
+
+Page 49
+
+UIM342C/UIM342S/UIM342XS
+Motion Control
+
+5.16 SS Cut-in Speed
+CW
+
+Disable ACK
+
+0x1B
+
+DATA
+
+Request ACK
+unsigned 32 bit
+
+SS
+
+Get Cut-in speed
+INST data length
+ACK data length
+
+Description
+
+0x9B
+
+SS=N
+
+Set Cut-in speed
+INST data length
+ACK data length
+
+0
+4
+
+Data
+Data
+
+n/a
+
+4
+4
+
+Data
+Data
+
+d0, d1, d2, d3
+d0, d1, d2, d3
+
+d0, d1, d2, d3
+
+N = 0... 232 pulse/sec.
+INST
+Example
+GET
+
+ID
+05
+
+CW
+9B
+
+DL
+00
+
+d0
+00
+
+d1
+00
+
+d2
+00
+
+d3
+00
+
+d4
+00
+
+d5
+00
+
+d6
+00
+
+d7
+00
+
+ID
+05
+
+CW
+1B
+
+DL
+04
+
+d0
+E8
+
+d1
+03
+
+d2
+00
+
+d3
+00
+
+d4
+00
+
+d5
+00
+
+d6
+00
+
+d7
+00
+
+ID CW DL d0 d1 d2 d3 d4
+05 9B 04 E9 03 00 00 00
+Data [d3:d2:d1:d0] = 0x03e9 (SET cut-in speed 1001).
+
+d5
+00
+
+d6
+00
+
+d7
+00
+
+ACK
+
+d5
+00
+
+d6
+00
+
+d7
+00
+
+Get SS.
+ACK
+
+Data [d3:d2:d1:d0] = 0x03e8 (Cut-in Speed is 1000).
+INST
+
+Example
+SET
+
+ID
+05
+
+CW
+1B
+
+DL
+04
+
+d0
+E9
+
+d1
+03
+
+d2
+00
+
+d3
+00
+
+d4
+00
+
+Data [d3:d2:d1:d0] = 0x03e9 (The cut-in speed is 1001).
+
+Note
+
+Page 50
+
+• Only when the Motor Driver is off, value of SS will be saved to EEP. Otherwise,
+SS will only exist in RAM and will be lost when power off.
+
+UIROBOT
+
+Motion Controller with CAN Interface
+5.17 SD Stop Deceleration
+CW
+
+Motion Control
+
+Disable ACK
+
+0x1C
+
+DATA
+
+0x9C
+
+unsigned 32 bit
+SD
+
+Get Stop Deceleration
+INST data length
+ACK data length
+
+describe
+
+Request ACK
+
+SD=N
+
+0
+4
+
+Set Stop Deceleration
+INST data length
+ACK data length
+
+4
+4
+
+Data
+Data
+
+n/a
+
+Data
+Data
+
+d0, d1, d2, d3
+d0, d1, d2, d3
+
+d2
+00
+
+d3
+00
+
+d0, d1, d2, d3
+
+N = 0... 232 pulse/sec2.
+INST
+Example
+GET
+
+Example
+SET
+
+ID
+05
+
+CW
+9C
+
+DL
+00
+
+d0
+00
+
+d1
+00
+
+d4
+00
+
+d5
+00
+
+d6
+00
+
+d7
+00
+
+ACK
+
+ID CW DL d0 d1 d2 d3 d4 d5 d6
+05 1C 04 00 6A 18 00 00 00 00
+Data [d3:d2:d1:d0] = 0x00186A00 (Stop deceleration is 1,600,000).
+
+d7
+00
+
+INST
+
+ID CW DL d0 d1 d2 d3 d4 d5 d6
+05 9C 04 00 6A 18 00 00 00 00
+Data [d3:d2:d1:d0] = 0x00186A00 (SET stop deceleration 1,600,000).
+
+d7
+00
+
+ACK
+
+d7
+00
+
+Get SD.
+
+ID CW DL d0 d1 d2 d3 d4 d5 d6
+05 1C 04 00 6A 18 00 00 00 00
+Data [d3:d2:d1:d0] = 0x00186A00 (Stop deceleration is 1,600,000).
+
+Mechanical movement cannot be stopped suddenly, otherwise it may cause
+impact and damage to the machine. Therefore a suitable maximum allowable
+acceleration value must be set. The SD value is designed for that purpose.
+
+Note
+
+The following situations will trigger the use of SD value:
+1) Instruction ST;
+2) The input logic of emergency stop is triggered;
+3) Other situation need the emergency stop, such as soft bumper limit is hit.
+
+• Only when the Motor Driver is off, value of SD will be saved to EEP. Otherwise,
+SD will only exist in RAM and will be lost when power off.
+
+UIROBOT
+
+Page 51
+
+UIM342C/UIM342S/UIM342XS
+5.18 JV Jog Velocity
+CW
+
+Motion Control
+
+Disable ACK
+
+0x1D
+
+DATA
+
+Request ACK
+
+0x9D
+
+signed 32-bit
+Get Current Speed
+
+JV
+
+INST data length
+ACK data length
+
+Description
+
+JV=N
+
+0
+4
+
+Data
+Data
+
+n/a
+
+d0, d1, d2, d3
+
+Set Desired Speed + Set Speed (Jog) Mode
+INST data length
+4
+Data
+d0, d1, d2, d3
+ACK data length
+5
+Data
+d0, d1, d2, d3, d4
+
+N = -231...+231 pulse/sec.
+INST
+
+Example
+GET
+
+ID CW
+05 9D
+Get current speed.
+
+DL
+00
+
+d0
+00
+
+d1
+00
+
+d2
+00
+
+d3
+00
+
+d4
+00
+
+d5
+00
+
+d6
+00
+
+d7
+00
+
+ACK
+
+DL
+04
+
+d0
+E8
+
+d1
+03
+
+d2
+00
+
+d3
+00
+
+d4
+00
+
+d5
+00
+
+d6
+00
+
+d7
+00
+
+ID CW DL d0 d1 d2 d3 d4 d5
+05 9D 04 18 FC FF FF 00 00
+Data [d3:d2:d1:d0] = 0xfffffc18 (SET desired speed -1000).
+
+d6
+00
+
+d7
+00
+
+ACK
+
+d6
+00
+
+d7
+00
+
+ID
+05
+
+CW
+1D
+
+Data [d3:d2:d1:d0] = 0x000003e8 (Current speed 1000).
+INST
+
+Example
+SET
+
+Note
+
+Page 52
+
+ID CW DL d0 d1 d2 d3 d4
+05 2E 05 02 18 FC FF FF
+CW = 0x2E (i.e. DV);
+Sub-index d0 = 2 (Desired speed).
+Data [d4:d3:d2:d1] = 0xfffffc18 (Desired speed -1000).
+
+d5
+00
+
+
+
+Instruction JV sets the desired motor speed and switch the control mode to
+speed mode.
+
+
+
+JV will take effective after a following BG instruction.
+
+
+
+Reply of the JV=N is the desired value DV[2]
+
+
+
+Once set, if want to get the desired value of speed, DV[2] should be used.
+
+UIROBOT
+
+Motion Controller with CAN Interface
+5.19 SP PTP Speed
+CW
+
+Motion Control
+
+Disable ACK
+
+0x1E
+
+DATA
+
+0x9E
+
+signed 32-bit
+SP
+
+Get Current Speed
+
+INST data length
+ACK data length
+
+Description
+
+Request ACK
+
+SP=N
+
+Set Desired Speed
+INST data length
+ACK data length
+
+0
+4
+
+Data
+Data
+
+d0, d1, d2, d3
+
+n/a
+
+4
+5
+
+Data
+Data
+
+d0, d1, d2, d3
+d0, d1, d2, d3, d4
+
+N = -231...+231 pulse/sec.
+INST
+
+Example
+GET
+
+ID CW
+05 9E
+Get current speed.
+
+DL
+00
+
+d0
+00
+
+d1
+00
+
+d2
+00
+
+d3
+00
+
+d4
+00
+
+d5
+00
+
+d6
+00
+
+d7
+00
+
+ACK
+
+DL
+04
+
+d0
+18
+
+d1
+FC
+
+d2
+FF
+
+d3
+FF
+
+d4
+00
+
+d5
+00
+
+d6
+00
+
+d7
+00
+
+ID CW DL d0 d1 d2 d3 d4 d5
+05 9E 04 E8 03 00 00 00 00
+Data [d3:d2:d1:d0] = 0x000003e8 (SET desired speed +1000).
+
+d6
+00
+
+d7
+00
+
+ACK
+
+d6
+00
+
+d7
+00
+
+ID
+05
+
+CW
+1E
+
+Data [d3:d2:d1:d0] = 0xfffffc18 (Current speed -1000).
+INST
+
+Example
+SET
+
+ID CW DL d0 d1 d2 d3 d4
+05 2E 05 02 E8 03 00 00
+CW = 0x2E (i.e. DV);
+Sub-index d0 = 2 (Desired speed).
+Data [d4:d3:d2:d1] = 0x000003e8 (Desired speed +1000).
+
+d5
+00
+
+• In PTP mode, PR / PA should be set first, and then SP, otherwise error #50 will
+Note
+
+be returned.
+
+• To set input logic speed, SP (not JV) should be used.
+
+UIROBOT
+
+Page 53
+
+UIM342C/UIM342S/UIM342XS
+5.20 PR Position Relative
+CW
+
+Motion Control
+
+Disable ACK
+
+0x1F
+
+DATA
+
+Request ACK
+
+0x9F
+
+signed 32-bit
+Get Current Relative Position
+
+PR
+
+INST data length
+ACK data length
+
+Description
+
+PR=N
+
+0
+4
+
+Data
+Data
+
+n/a
+
+d0, d1, d2, d3
+
+Set Desired Relative Position + Set Position (PTP) Mode
+INST data length
+4
+Data
+d0, d1, d2, d3
+ACK data length
+5
+Data
+d0, d1, d2, d3, d4
+
+N = -231...+231 pulse.
+INST
+
+Example
+GET
+
+ID CW DL d0
+05 9F 00 00
+Get current relative position.
+
+d1
+00
+
+d2
+00
+
+d3
+00
+
+d4
+00
+
+d5
+00
+
+d6
+00
+
+d7
+00
+
+ACK
+
+d1
+FC
+
+d2
+FF
+
+d3
+FF
+
+d4
+00
+
+d5
+00
+
+d6
+00
+
+d7
+00
+
+ID
+05
+
+CW
+1F
+
+DL
+04
+
+d0
+18
+
+Data [d3:d2:d1:d0] = 0xfffffc18 (Current relative position -1000).
+INST
+
+ID CW DL d0 d1 d2 d3 d4 d5 d6 d7
+05 9E 04 E8 03 00 00 00 00 00 00
+Data [d3:d2:d1:d0] = 0x000003e8 (SET desired relative position +1000).
+Example
+SET
+
+Note
+
+Page 54
+
+ACK
+
+ID CW DL d0 d1 d2 d3 d4 d5 d6
+05 2E 05 03 E8 03 00 00 00 00
+CW = 0x2E (i.e. DV);
+Sub-index d0 = 3 (Desired relative position).
+Data [d4:d3:d2:d1] = 0x000003e8 (Expected relative position +1000).
+
+d7
+00
+
+•
+
+Relative Position is the displacement added to the current position.
+
+•
+
+In PTP mode, PR / PA should be set first, and then SP, otherwise error #50
+will be returned.
+
+•
+
+PR will take effective after a following BG instruction.
+
+UIROBOT
+
+Motion Controller with CAN Interface
+5.21 PA Position Absolute
+CW
+
+Motion Control
+
+Disable ACK
+
+0x20
+
+DATA
+
+Request ACK
+
+0xA0
+
+signed 32-bit
+Get Current Absolute Position
+
+PA
+
+INST data length
+ACK data length
+
+Description
+
+PA=N
+
+0
+4
+
+Data
+Data
+
+n/a
+
+d0, d1, d2, d3
+
+Set Desired Absolute Position + Set Position (PTP) Mode
+4
+Data
+d0, d1, d2, d3
+5
+Data
+d0, d1, d2, d3, d4
+
+INST data length
+ACK data length
+
+N = -231...+231 pulse.
+INST
+
+Example
+GET
+
+ID CW DL d0
+05 A0 00 00
+Get current absolute position.
+
+d1
+00
+
+d2
+00
+
+d3
+00
+
+d4
+00
+
+d5
+00
+
+d6
+00
+
+d7
+00
+
+ACK
+
+d1
+FC
+
+d2
+FF
+
+d3
+FF
+
+d4
+00
+
+d5
+00
+
+d6
+00
+
+d7
+00
+
+ID
+05
+
+CW
+20
+
+DL
+04
+
+d0
+18
+
+Data [d3:d2:d1:d0] = 0xfffffc18 (Current absolute position -1000).
+
+INST
+
+ID CW DL d0 d1 d2 d3 d4 d5 d6 d7
+05 A0 04 E8 03 00 00 00 00 00 00
+Data [d3:d2:d1:d0] = 0x000003e8 (SET desired absolute position +1000).
+Example
+SET
+
+ACK
+
+ID CW DL d0 d1 d2 d3 d4 d5 d6
+05 2E 05 04 E8 03 00 00 00 00
+CW = 0x2E (i.e. DV);
+Sub-index d0 = 4 (Desired absolute position).
+Data [d4:d3:d2:d1] = 0x000003e8 (Expected absolute position +1000).
+
+•
+
+In PTP mode, PR / PA should be set first, and then SP, otherwise error #50
+will be returned.
+
+•
+
+PA will take effective after a following BG instruction.
+
+Note
+
+UIROBOT
+
+d7
+00
+
+Page 55
+
+UIM342C/UIM342S/UIM342XS
+5.22 OG Set Origin
+CW
+
+Motion Control
+
+Disable ACK
+
+0x21
+
+Request ACK
+
+DATA
+
+n/a
+Set The Origin, i.e. clear the position counter
+
+OG
+Description
+
+INST data length
+ACK data length
+
+Example
+SET
+
+Note
+
+Page 56
+
+0xA1
+
+0
+0
+
+Data
+Data
+
+n/a
+
+n/a
+
+INST
+
+ID
+05
+
+CW
+A1
+
+DL
+00
+
+d0
+00
+
+d1
+00
+
+d2
+00
+
+d3
+00
+
+d4
+00
+
+d5
+00
+
+d6
+00
+
+d7
+00
+
+ACK
+
+ID
+05
+
+CW
+21
+
+DL
+00
+
+d0
+00
+
+d1
+00
+
+d2
+00
+
+d3
+00
+
+d4
+00
+
+d5
+00
+
+d6
+00
+
+d7
+00
+
+
+
+Set the current position as the origin and clear the position counter to zero.
+
+
+
+When the motor is moving, instructions OG is disabled. But during
+motion, it is possible for input logic to set the origin.
+
+UIROBOT
+
+Motion Controller with CAN Interface
+5.23 BL Backlash Compensation
+CW
+
+Motion Control
+
+Disable ACK
+
+0x2D
+
+DATA
+
+0xAD
+
+unsigned 32 bit
+BL
+
+Get Backlash Compensation Value
+
+INST data length
+ACK data length
+
+Description
+
+Request ACK
+
+BL=N
+
+0
+4
+
+Data
+Data
+
+Set Backlash Compensation Value
+INST data length
+ACK data length
+
+4
+4
+
+n/a
+
+d0, d1, d2, d3
+
+Data
+Data
+
+d0, d1, d2, d3
+d0, d1, d2, d3
+
+N = 0...+232 pulse.
+INST
+
+Example
+GET
+
+ID CW DL d0
+05 AD 00 00
+Get current absolute position.
+
+d1
+00
+
+d2
+00
+
+d3
+00
+
+d4
+00
+
+d5
+00
+
+d6
+00
+
+d7
+00
+
+ACK
+
+d1
+03
+
+d2
+00
+
+d3
+00
+
+d4
+00
+
+d5
+00
+
+d6
+00
+
+d7
+00
+
+d6
+00
+
+d7
+00
+
+ID CW DL d0 d1 d2 d3 d4 d5 d6
+05 2D 04 E9 03 00 00 00 00 00
+Data [d3:d2:d1:d0] = 0x000003e9 (The backlash compensation is 1001).
+
+d7
+00
+
+ID
+05
+
+CW
+2D
+
+DL
+04
+
+d0
+E8
+
+Data [d3:d2:d1:d0] = 0x03e8 (The backlash compensation is 1000).
+INST
+
+Example
+SET
+
+UIROBOT
+
+ID CW DL d0 d1 d2 d3 d4 d5
+05 AD 04 E9 03 00 00 00 00
+Data [d3:d2:d1:d0] = 0x03e9 (SET backlash compensation 1001).
+ACK
+
+Page 57
+
+UIM342C/UIM342S/UIM342XS
+5.24 MS[i] Motion Status
+
+Motion Control
+
+CW
+
+Disable ACK
+
+0x11
+
+Request ACK
+
+0x91
+
+DATA
+
+Sub-Index(i)
+
+unsigned 8 bit
+
+Data
+
+unsigned 8 bit
+
+MS[0]
+
+Get Status Flags and Relative Position
+INST data length
+1
+Data
+d0=0;
+ACK data length
+8
+Data
+d0=0, d1. . .d7;
+
+MS[1]
+
+Get the Current Speed and Absolute Position
+INST data length
+1
+Data
+d0=1;
+ACK data length
+8
+Data
+d0=1, d1. . .d7;
+
+MS[0]=0
+
+Clear Status Flags
+
+Description
+
+INST data length
+ACK data length
+
+2
+8
+
+d0=0, d1=0;
+d0=0, d1. . .d7;
+
+Data
+Data
+
+Please refer to chapter 3.7 “Acquire Motion Status” for details.
+INST
+
+Example
+GET
+
+ID CW DL d0 d1 d2 d3
+05 91 01 00 00 00 00
+Sub-Index d0 = 0 (Get the current motion status).
+
+d4
+00
+
+d5
+00
+
+d6
+00
+
+d7
+00
+
+ACK
+
+d5
+FC
+
+d6
+FF
+
+d7
+FF
+
+ID
+05
+
+CW
+11
+
+DL
+08
+
+d0
+00
+
+d1
+3D
+
+d2
+03
+
+d3
+00
+
+d4
+18
+
+d4
+
+…
+
+Sub-Index d0 = 0 (Current motion status);
+Data
+
+0
+
+n/a
+
+0
+
+OP1
+
+ID
+
+CW
+
+DL
+
+d0
+
+d1
+
+d2
+
+d3
+
+05
+
+11
+
+08
+
+00
+
+3d
+
+03
+
+00
+
+1
+
+1
+
+1
+
+1
+
+IN3
+
+IN2
+
+IN1
+
+SON
+
+0
+
+0
+
+1
+
+Mode
+
+ERR
+
+d7
+
+PR
+0
+
+0
+
+n/a
+
+0
+
+0
+
+0
+
+1
+
+1
+
+LOCK
+TLIF
+PAIF
+n/a
+STOP
+n/a
+
+Motion mode = PTP; Motor driver = ON; IN1/2/3 level = 1; OP1 level = 0;
+Speed is zero = YES; PTP Positioning = In Position;
+Current relative position [d7:d6:d5:d4] = 0xfffffc18 = -1000 (pulse);
+INST
+
+Example
+SET
+
+ID CW DL d0 d1 d2 d3 d4
+05 91 02 00 00 00 00 00
+Sub-Index d0 = 0; Data d1 = 0 (Clear motion status flags).
+
+d5
+00
+
+d6
+00
+
+d7
+00
+
+ACK
+
+d5
+00
+
+d6
+00
+
+d7
+00
+
+ID
+05
+
+CW
+11
+
+DL
+08
+
+d0
+00
+
+d1
+3D
+
+d2
+01
+
+d3
+00
+
+d4
+00
+
+Sub-Index d0 = 0 (Current motion status). Data (See Example GET)
+
+Page 58
+
+UIROBOT
+
+Motion Controller with CAN Interface
+5.25 DV[i] Desired Values
+
+Motion Control
+
+CW
+
+Disable ACK
+
+0x2E
+
+Request ACK
+
+0xAE
+
+DATA
+
+Sub-Index(i)
+
+unsigned 8 bit
+
+Data
+
+n/a
+
+DV[i]
+
+Get Desired Value
+INST data length
+ACK data length
+
+Description
+
+Data
+Data
+
+d0(=i);
+d0(=i), d1. . .d4;
+
+i
+
+Description
+
+0
+
+Current motion mode
+
+0: JOG, 1: PTP
+
+1
+
+Desired motor current
+
+0…80 : 0.0…8.0 Amp
+
+2
+
+Desired speed
+
+-231...+231 pulse/sec
+
+3
+
+Desired relative position
+
+-231...+231 pulse
+
+4
+
+Desired absolute position
+
+-231...+231 pulse
+
+INST
+
+Example
+GET
+
+1
+5
+
+Data [d4:d3:d2:d1]
+
+ID CW DL d0 d1
+05 AE 01 02 00
+Sub-Index d0 = 2 (Get Desired speed).
+
+d4
+00
+
+d5
+00
+
+d6
+00
+
+d7
+00
+
+ID CW DL d0 d1 d2 d3 d4
+05 2E 05 02 E8 03 00 00
+Sub-index d0 = 2 (Desired speed).
+Data [d4:d3:d2:d1] = 0x000003e8 (Desired speed +1000).
+
+d5
+00
+
+d6
+00
+
+d7
+00
+
+ACK
+
+d2
+00
+
+d3
+00
+
+Note
+
+UIROBOT
+
+Page 59
+
+UIM342C/UIM342S/UIM342XS
+5.26 IL[i] Input Logic
+
+Input Logic
+
+CW
+
+Disable ACK
+
+0x34
+
+Request ACK
+
+0xB4
+
+DATA
+
+Sub-Index(i)
+
+unsigned 8 bit
+
+Data
+
+unsigned 16 bit
+
+Get Sensor Trigger Action
+
+IL[i]
+
+INST data length
+ACK data length
+IL[i]=N
+
+Set Sensor Trigger Action
+INST data length
+ACK data length
+
+Description
+
+1
+3
+
+3
+3
+
+i
+
+Data
+Data
+
+d0 (=i)
+d0 (=i), d1, d2
+
+Data
+Data
+
+d0 (=i), d1, d2
+d0 (=i), d1, d2
+
+Description
+
+0
+
+Action after IN1 is triggered
+
+1
+
+Action after IN2 is triggered
+
+2
+
+Action after IN3 is triggered
+
+3
+
+Behavior when motor stalls, N=0: lock down, N=1: freewheel
+
+Please refer to chapter 4.3 “Configure / Attach Input Logic Action” for details.
+INST
+
+Example
+GET
+
+ID CW DL d0 d1 d2 d3
+05 B4 01 00 00 00 00
+Sub-index d0 = 0 (Get IN1 port trigger action).
+
+d4
+00
+
+d5
+00
+
+d6
+00
+
+d7
+00
+
+ACK
+
+d4
+00
+
+d5
+00
+
+d6
+00
+
+d7
+00
+
+ID
+05
+
+CW
+34
+
+DL
+03
+
+d0
+00
+
+d1
+06
+
+d2
+80
+
+d3
+00
+
+Sub-index d0 = 0 (IN1 port trigger action).
+Data d1, d2 = 0x80 (Both edge: Power on trigger action: disabled, no action).
+INST
+
+Example
+SET
+
+ID
+05
+
+CW
+B4
+
+DL
+03
+
+d0
+00
+
+d1
+06
+
+d2
+80
+
+d3
+00
+
+d4
+00
+
+d5
+00
+
+d6
+00
+
+d7
+00
+
+Sub-index d0 = 0 (IN1 port trigger action).
+d1 = 0x06 (Falling edge: Power on trigger action: enable; Set origin then
+decelerate to stop).
+d2 = 0x80 (Rising edge: Power on trigger action: disable, no action).
+ACK
+
+ID
+05
+
+CW
+34
+
+DL
+03
+
+d0
+00
+
+d1
+06
+
+d2
+80
+
+d3
+00
+
+d4
+00
+
+d5
+00
+
+d6
+00
+
+d7
+00
+
+Sub-index d0 = 0 (IN1 port trigger action).
+Data d1 = 0x06 (same as above); d2 = 0x80 (same as above).
+
+• Define actions when input port logic level change is detected.
+Note
+
+• When the Motor Driver is off, set value of IL will be saved to EEP. Otherwise,
+IL value will be only in the RAM.
+
+Page 60
+
+UIROBOT
+
+Motion Controller with CAN Interface
+5.27 TG[i] Trigger
+
+Input Logic
+
+CW
+
+Disable ACK
+
+0x35
+
+Request ACK
+
+0xB5
+
+DATA
+
+Sub-Index(i)
+
+unsigned 8 bit
+
+Data
+
+unsigned 16 bit
+
+Get The Input Trigger Mode
+
+TG[i]
+
+INST data length
+ACK data length
+TG[i]=N
+
+1
+3
+
+d0 (=i)
+d0 (=i), d1, d2
+
+Set The Input Trigger Mode
+INST data length
+ACK data length
+
+3
+3
+
+i
+
+Description
+
+Data
+Data
+
+Data
+Data
+
+d0 (=i), d1, d2
+d0 (=i), d1, d2
+
+Description
+
+0
+
+Trigger mode of IN1
+
+1
+
+Trigger mode of IN2
+
+2
+
+Trigger mode of IN3
+
+N
+
+Description
+
+0
+
+Trigger continuously
+
+1 … 60000
+60001
+
+Trigger after Low pass filter, filter time 1…60000 ms
+One-Time Trigger. After triggered, IL[i] needs to be set again to work.
+
+Please refer to chapter 4.2 “Trigger Modes” for details.
+INST
+
+Example
+GET
+
+ID CW DL d0 d1 d2
+05 B5 01 01 00 00
+Sub-index d0 = 1 (Get IN2 trigger mode).
+
+d3
+00
+
+d4
+00
+
+d5
+00
+
+d6
+00
+
+d7
+00
+
+ACK
+
+d3
+00
+
+d4
+00
+
+d5
+00
+
+d6
+00
+
+d7
+00
+
+ID
+05
+
+CW
+35
+
+DL
+03
+
+d0
+00
+
+d1
+00
+
+d2
+00
+
+Sub-index d0 = 1 (IN2); Data [d2:d1] = 0 (Trigger continuously).
+INST
+
+Example
+SET
+
+Note
+
+UIROBOT
+
+ID CW DL d0 d1 d2 d3 d4 d5 d6 d7
+05 B5 03 00 64 00 00 00 00 00 00
+Sub-index d0 = 1 (IN1); Data [d2:d1] = 0x0064 (Low-pass filter time 100 ms).
+ACK
+
+ID CW DL d0 d1 d2 d3 d4 d5 d6 d7
+05 35 03 00 64 00 00 00 00 00 00
+Sub-index d0 = 1 (IN1); Data [d2:d1] = 0x0064 (Low-pass filter time 100 ms).
+
+
+Set trigger mode for input ports.
+
+
+
+When the Motor Driver is off, set value of TG will be saved to EEP.
+Otherwise, TG value will be only in the RAM.
+
+Page 61
+
+UIM342C/UIM342S/UIM342XS
+5.28 DI Digital I /O
+CW
+
+Input Logic
+
+Disable ACK
+
+0x37
+
+DATA
+
+Get Digital Input And Output
+INST data length
+ACK data length
+
+DI=N
+
+0
+4
+
+Data
+Data
+
+n/a
+d0, d1, d2(=0), d3(=0)
+
+INST data length
+
+4
+
+Data
+
+d0, d1(=1), d2(=0), d3(=0)
+d0 = desired output
+
+ACK data length
+
+4
+
+Data
+
+d0, d1, d2(=0), d3(=0)
+
+Set Digital Output
+
+INST
+
+Example
+GET
+
+0xB7
+
+unsigned 32 bit
+DI
+
+Description
+
+Request ACK
+
+ID CW DL d0
+05 B7 00 00
+Get input and output logic level.
+
+d1
+00
+
+d2
+00
+
+d3
+00
+
+d4
+00
+
+d5
+00
+
+d6
+00
+
+d7
+00
+
+ACK
+
+d1
+00
+
+d2
+00
+
+d3
+00
+
+d4
+00
+
+d5
+00
+
+d6
+00
+
+d7
+00
+
+ID
+05
+
+CW
+37
+
+DL
+04
+
+d0
+03
+
+d0.bit0 = 1 (IN1 = 1) ; d0.bit1 = 1 (IN2 = 1) ; d0.bit2 = 0 (IN3 = 0) ;
+d1.bit0 = 0 (OP1 = 0).
+
+INST
+
+Example
+SET
+
+ID CW DL
+05 B7 04
+Set output logic level to 1.
+
+d0
+01
+
+d1
+01
+
+d2
+00
+
+d3
+00
+
+d4
+00
+
+d5
+00
+
+d6
+00
+
+d7
+00
+
+ACK
+
+d0
+03
+
+d1
+01
+
+d2
+00
+
+d3
+00
+
+d4
+00
+
+d5
+00
+
+d6
+00
+
+d7
+00
+
+ID
+05
+
+CW
+37
+
+DL
+04
+
+d0.bit0 = 1 (IN1 = 1) ; d0.bit1 = 1 (IN2 = 1) ; d0.bit2 = 0 (IN3 = 0) ;
+d1.bit0 = 0 (OP1 = 1).
+
+Page 62
+
+UIROBOT
+
+Motion Controller with CAN Interface
+5.29 RT Real-Time Inform
+
+Real-time Notification
+
+CW
+
+0x5A
+
+DATA
+
+n/a
+
+Description
+
+Example
+Message
+
+UIROBOT
+
+Refer to chapter 2.4 “Real-Time Status and Alarm Notification" for details.
+
+ACK
+
+ID
+05
+
+CW
+5A
+
+DL
+01
+
+d0
+01
+
+d1
+00
+
+d2
+00
+
+d3
+00
+
+d4
+00
+
+d5
+00
+
+d6
+00
+
+d7
+00
+
+Data d0 = 1 (Falling edge is detected on IN1).
+
+Page 63
+
+UIM342C/UIM342S/UIM342XS
+
+Appendix-1 RTU CRC16 Source Code
+UIMessage uses CRC-16 (Modbus) algorithm. For details, please refer to Online CRC-8 CRC-16
+CRC-32 Calculator (crccalc.com) . The source code used in the calculation is listed below.
+// CRC low byte table
+unsigned char tblCRCLo[256] = {
+0x00, 0xC0, 0xC1, 0x01, 0xC3, 0x03, 0x02, 0xC2, 0xC6, 0x06, 0x07, 0xC7, 0x05, 0xC5, 0xC4, 0x04, 0xCC, 0x0C,
+0x0D, 0xCD, 0x0F, 0xCF, 0xCE, 0x0E, 0x0A, 0xCA, 0xCB, 0x0B, 0xC9, 0x09, 0x08, 0xC8, 0xD8, 0x18, 0x19, 0xD9,
+0x1B, 0xDB, 0xDA, 0x1A, 0x1E, 0xDE, 0xDF, 0x1F, 0xDD, 0x1D, 0x1C , 0xDC, 0x14, 0xD4, 0xD5, 0x15, 0xD7, 0x17,
+0x16, 0xD6, 0xD2, 0x12, 0x13, 0xD3, 0x11, 0xD1, 0xD0, 0x10, 0xF0, 0x30, 0x31, 0xF1, 0x33, 0xF3, 0xF 2, 0x32, 0x36,
+0xF6, 0xF7, 0x37, 0xF5, 0x35, 0x34, 0xF4, 0x3C, 0xFC, 0xFD, 0x3D, 0xFF, 0x3F, 0x3E, 0xFE, 0xFA, 0x3A, 0x3B,
+0xFB, 0x39, 0xF9, 0xF8, 0x38, 0x2 8, 0xE8, 0xE9, 0x29, 0xEB, 0x2B, 0x2A, 0xEA, 0xEE, 0x2E, 0x2F, 0xEF, 0x2D,
+0xED, 0xEC, 0x2C, 0xE4, 0x24, 0x25, 0xE5, 0x27, 0xE7, 0xE6, 0x26, 0x22, 0xE 2, 0xE3, 0x23, 0xE1, 0x21, 0x20,
+0xE0, 0xA0, 0x60, 0x61, 0xA1, 0x63, 0xA3, 0xA2, 0x62, 0x66, 0xA6, 0xA7, 0x67, 0xA5, 0x65, 0x64, 0xA4, 0x6C,
+0xAC , 0xAD, 0x6D, 0xAF, 0x6F, 0x6E, 0xAE, 0xAA, 0x6A, 0x6B, 0xAB, 0x69, 0xA9, 0xA8, 0x68, 0x78, 0xB8, 0xB9,
+0x79, 0xBB, 0x7B, 0x7A, 0xBA, 0xBE, 0x7E, 0x7F, 0xBF , 0x7D, 0xBD, 0xBC, 0x7C, 0xB4, 0x74, 0x75, 0xB5, 0x77,
+0xB7, 0xB6, 0x76, 0x72, 0xB2, 0xB3, 0x73, 0xB1, 0x71, 0x70, 0xB0, 0x50, 0x90, 0x91, 0x5 1, 0x93, 0x53, 0x52, 0x92,
+0x96, 0x56, 0x57, 0x97, 0x55, 0x95, 0x94, 0x54, 0x9C, 0x5C, 0x5D, 0x9D, 0x5F, 0x9F, 0x9E, 0x5E, 0x5A, 0x9A, 0x9B,
+0x5B, 0x9 9, 0x59, 0x58, 0x98, 0x88, 0x48, 0x49, 0x89, 0x4B, 0x8B, 0x8A, 0x4A, 0x4E, 0x8E, 0x8F, 0x4F, 0x8D,
+0x4D, 0x4C, 0x8C, 0x44, 0x84, 0x85, 0x45, 0x87, 0x4 7, 0x46, 0x86, 0x82, 0x42, 0x43, 0x83, 0x41, 0x81, 0x80, 0x40 };
+// CRC high byte table
+unsigned char tblCRCHi[256] = {
+0x00, 0xC1, 0x81, 0x40, 0x01, 0xC0, 0x80, 0x41, 0x01, 0xC0, 0x80, 0x41, 0x00, 0xC1, 0x81, 0x40, 0x01, 0xC0, 0x80,
+0x41, 0x0 0, 0xC1, 0x81, 0x40, 0x00, 0xC1, 0x81, 0x40, 0x01, 0xC0, 0x80, 0x41, 0x01, 0xC0, 0x80, 0x41, 0x00, 0xC1,
+0x81, 0x40, 0x00, 0xC1, 0x81, 0x40, 0x01, 0xC 0, 0x80, 0x41, 0x00, 0xC1, 0x81, 0x40, 0x01, 0xC0, 0x80, 0x41, 0x01,
+0xC0, 0x80, 0x41, 0x00, 0xC1, 0x81, 0x40, 0x01, 0xC0, 0x80, 0x41, 0x00, 0xC1, 0x8 1, 0x40, 0x00, 0xC1, 0x81, 0x40,
+0x01, 0xC0, 0x80, 0x41, 0x00, 0xC1, 0x81, 0x40, 0x01, 0xC0, 0x80, 0x41, 0x01, 0xC0, 0x80, 0x41, 0x00, 0xC1, 0x81,
+0x4 0, 0x00, 0xC1, 0x81, 0x40, 0x01, 0xC0, 0x80, 0x41, 0x01, 0xC0, 0x80, 0x41, 0x00, 0xC1, 0x81, 0x40, 0x01, 0xC0,
+0x80, 0x41, 0x00, 0xC1, 0x81, 0x40, 0x0 0, 0xC1, 0x81, 0x40, 0x01, 0xC0, 0x80, 0x41, 0x01, 0xC0, 0x80, 0x41, 0x00,
+0xC1, 0x81, 0x40, 0x00, 0xC1, 0x81, 0x40, 0x01, 0xC0, 0x80, 0x41, 0x00, 0xC 1, 0x81, 0x40, 0x01, 0xC0, 0x80, 0x41,
+0x01, 0xC0, 0x80, 0x41, 0x00, 0xC1, 0x81, 0x40, 0x00, 0xC1, 0x81, 0x40, 0x01, 0xC0, 0x80, 0x41, 0x01, 0xC0, 0x8 0,
+0x41, 0x00, 0xC1, 0x81, 0x40, 0x01, 0xC0, 0x80, 0x41, 0x00, 0xC1, 0x81, 0x40, 0x00, 0xC1, 0x81, 0x40, 0x01, 0xC0,
+0x80, 0x41, 0x00, 0xC1, 0x81, 0x4 0, 0x01, 0xC0, 0x80, 0x41, 0x01, 0xC0, 0x80, 0x41, 0x00, 0xC1, 0x81, 0x40, 0x01,
+0xC0, 0x80, 0x41, 0x00, 0xC1, 0x81, 0x40, 0x00, 0xC1, 0x81, 0x40, 0x0 1, 0xC0, 0x80, 0x41, 0x01, 0xC0, 0x80, 0x41,
+0x00, 0xC1, 0x81, 0x40, 0x00, 0xC1, 0x81, 0x40, 0x01, 0xC0, 0x80, 0x41, 0x00, 0xC1, 0x81, 0x40, 0x01, 0xC 0, 0x80,
+0x41, 0x01, 0xC0, 0x80, 0x41, 0x00, 0xC1, 0x81, 0x40 };
+// Calculate CRC, * buf points to 0xAA ID CW … d8 data sequence, q ty = 13 bytes
+unsigned short RtuCrc16(unsigned char* buf, unsigned int qty)
+{
+unsigned char crcH = 0xFF;
+unsigned char crcL = 0xFF;
+int idx = 0;
+while (qty--)
+{
+idx = crcL ^ *buf++;
+crcL = crcH ^ tblCRCHi[idx];
+crcH = tblCRCLo[idx];
+}
+}
+
+return (crcH << 8) | crcL;
+
+Page 64
+
+UIROBOT
+
+
