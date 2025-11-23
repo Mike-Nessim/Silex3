@@ -180,6 +180,7 @@ FUNC_JOG_VELOCITY = 0x1D  # JV - Jog Velocity (signed 32-bit, 4 bytes)
 FUNC_PTP_SPEED = 0x1E  # SP - PTP Speed (signed 32-bit, 4 bytes)
 FUNC_POSITION_RELATIVE = 0x1F  # PR - Position Relative (signed 32-bit, 4 bytes)
 FUNC_POSITION_ABSOLUTE = 0x20  # PA - Position Absolute (signed 32-bit, 4 bytes)
+FUNC_SET_ORIGIN = 0x21  # OG - Set Origin (clear position counter to zero)
 FUNC_MOTION_STATUS = 0x11  # MS[i] - Motion Status (i=0 for status + relative position)
 FUNC_DESIRED_VALUES = 0x2E  # DV[i] - Desired Values (i=0 for velocity + absolute position)
 

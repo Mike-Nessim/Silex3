@@ -1,19 +1,19 @@
 #!/bin/bash
 # Setup virtual network interface for UIRobot devices
-# This adds a static IP 192.168.1.222 to communicate with devices on 192.168.1.0 subnet
+# This adds a static IP 192.168.1.173 to communicate with devices on 192.168.1.0 subnet
 # Uses NetworkManager for persistent configuration
 
-VIRTUAL_IP="192.168.1.222/24"
+VIRTUAL_IP="192.168.1.173/24"
 CONNECTION_NAME="Wired connection 1"
 
 echo "Setting up virtual network interface (persistent)..."
 echo ""
 
 # Check if IP already exists in NetworkManager config
-if nmcli connection show "$CONNECTION_NAME" | grep -q "192.168.1.222"; then
-    echo "Virtual IP 192.168.1.222 already configured in NetworkManager"
+if nmcli connection show "$CONNECTION_NAME" | grep -q "192.168.1.173"; then
+    echo "Virtual IP 192.168.1.173 already configured in NetworkManager"
     # Make sure it's active
-    if ! ip addr show | grep -q "192.168.1.222"; then
+    if ! ip addr show | grep -q "192.168.1.173"; then
         echo "Activating connection..."
         sudo nmcli connection up "$CONNECTION_NAME"
     fi
@@ -33,10 +33,10 @@ else
 fi
 
 # Verify
-if ip addr show | grep -q "192.168.1.222"; then
+if ip addr show | grep -q "192.168.1.173"; then
     echo ""
     echo "✓ Virtual network interface configured successfully (persistent)"
-    ip addr show | grep "192.168.1.222"
+    ip addr show | grep "192.168.1.173"
     echo ""
     echo "This configuration will persist across reboots."
 else

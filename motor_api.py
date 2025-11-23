@@ -261,6 +261,38 @@ def get_motor_position(node_id: int) -> Tuple[bool, Optional[int], Optional[str]
         return (False, None, f"Error: {str(e)}")
 
 
+def reset_position_to_zero(node_id: int) -> Tuple[bool, Optional[str]]:
+    """
+    Reset motor's position register to zero without moving the motor.
+    This sets the current position as the zero/reference point using the OG (Set Origin) command.
+    
+    Args:
+        node_id: Motor CAN node ID
+        
+    Returns:
+        Tuple of (success: bool, error_message: str or None)
+    """
+    global _sdk_instance, _gateway_info, _connected
+    
+    if not _connected or not _sdk_instance:
+        return (False, "Not connected to gateway. Call connect() first.")
+    
+    try:
+        # Use OG (Set Origin) command to set current position as zero
+        result = _sdk_instance.SdkSetOrigin(
+            _gateway_info.GtwyHandle,
+            node_id
+        )
+        
+        if result == 0:
+            return (True, None)
+        else:
+            return (False, f"Failed to reset position: Error code {result}")
+            
+    except Exception as e:
+        return (False, f"Error: {str(e)}")
+
+
 # Convenience functions with default node ID
 def move_motor_5(position: Optional[int] = None,
                  relative: bool = False,

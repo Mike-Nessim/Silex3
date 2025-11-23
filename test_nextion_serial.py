@@ -8,8 +8,8 @@ import serial
 import sys
 import time
 
-SERIAL_PORT = '/dev/ttyUSB0'
-BAUD_RATE = 9600
+SERIAL_PORT = '/dev/ttyUSB1'
+BAUD_RATE = 921600
 
 def main():
     print("Nextion Serial Raw Data Monitor")

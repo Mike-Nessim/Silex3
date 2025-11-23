@@ -422,4 +422,29 @@ class UIRobotSDK:
                     return (ERRO_SUCCESS, 0, position)
         
         return (ERRO_FAIL, 0, 0)
+    
+    def SdkSetOrigin(self, GtwyHandle: int, CANid: int) -> int:
+        """
+        Set Origin (OG command)
+        Sets the current position as the origin and clears the position counter to zero.
+        
+        Args:
+            GtwyHandle: Gateway handle
+            CANid: Device CAN ID
+            
+        Returns:
+            0 on success, error code on failure
+            
+        Note:
+            When the motor is moving, this instruction is disabled.
+        """
+        if not self.connected:
+            return ERRO_FAIL
+        
+        from uirobot_protocol import FUNC_SET_ORIGIN
+        # OG command has no data (DL=0)
+        response = self._send_uimessage(CANid, FUNC_SET_ORIGIN, b'', need_ack=True)
+        if response:
+            return ERRO_SUCCESS
+        return ERRO_FAIL
 

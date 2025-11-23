@@ -9,7 +9,7 @@ import sys
 import time
 
 SERIAL_PORT = '/dev/ttyUSB0'
-BAUD_RATE = 9600
+BAUD_RATE = 921600
 
 def send_command(port, command_str):
     """Send a command to Nextion display"""
